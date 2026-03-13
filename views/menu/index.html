@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fork n Cork - Menu</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+  <!-- ======================================================================
+       HEADER
+       ====================================================================== -->
+  <header class="header" id="header">
+    <div class="container header-inner">
+      <a href="/" class="logo">
+        <i class="fas fa-utensils"></i>
+        <span>Fork <em>n</em> Cork</span>
+      </a>
+
+      <nav class="nav" id="nav">
+        <ul class="nav-list">
+          <li><a href="/" class="nav-link">Home</a></li>
+          <li><a href="/menu" class="nav-link active">Menu</a></li>
+          <li><a href="/contact" class="nav-link">Contact</a></li>
+        </ul>
+      </nav>
+
+      <div class="header-actions">
+        <button class="cart-toggle" id="cart-toggle" aria-label="Open cart">
+          <i class="fas fa-shopping-cart"></i>
+          <span class="cart-badge" id="cart-badge">0</span>
+        </button>
+        <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle menu">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ======================================================================
+       PAGE BANNER
+       ====================================================================== -->
+  <section class="page-banner" style="background-image: url('/images/forkncork3.jpg')">
+    <div class="page-banner-overlay"></div>
+    <div class="container">
+      <h1 class="page-banner-title">Our Menu</h1>
+      <nav class="breadcrumb">
+        <a href="/">Home</a>
+        <span>/</span>
+        <span>Menu</span>
+      </nav>
+    </div>
+  </section>
+
+  <!-- ======================================================================
+       MENU SECTION
+       ====================================================================== -->
+  <section class="section menu-section" id="menu-section">
+    <div class="container">
+
+      <!-- Category Filters -->
+      <div class="category-filters" id="category-filters">
+        <button class="filter-btn active" data-category="all">All</button>
+        <!-- Additional category buttons loaded dynamically by JS -->
+      </div>
+
+      <!-- Search Bar -->
+      <div class="menu-search">
+        <div class="search-input-wrapper">
+          <i class="fas fa-search"></i>
+          <input
+            type="text"
+            id="menu-search"
+            class="search-input"
+            placeholder="Search our menu..."
+            autocomplete="off"
+          >
+        </div>
+      </div>
+
+      <!-- Product Grid -->
+      <div class="product-grid" id="product-grid">
+        <!-- Product cards populated by JS -->
+      </div>
+
+      <!-- Loading Spinner -->
+      <div class="loading-spinner" id="menu-loading">
+        <i class="fas fa-spinner fa-spin"></i>
+        <p>Loading menu...</p>
+      </div>
+
+      <!-- Empty State -->
+      <div class="empty-state hidden" id="menu-empty">
+        <i class="fas fa-search"></i>
+        <p>No products found matching your criteria.</p>
+      </div>
+
+      <!-- Pagination -->
+      <div class="pagination" id="menu-pagination">
+        <!-- Pagination buttons populated by JS -->
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ======================================================================
+       FOOTER
+       ====================================================================== -->
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div class="footer-col">
+        <h4 class="footer-title">About Fork n Cork</h4>
+        <p>
+          Great food, great vibes. We serve handcrafted meals made with the freshest
+          ingredients in town. Come hungry, leave happy.
+        </p>
+        <div class="footer-socials">
+          <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h4 class="footer-title">Quick Links</h4>
+        <ul class="footer-links">
+          <li><a href="/">Home</a></li>
+          <li><a href="/menu">Menu</a></li>
+          <li><a href="/contact">Contact</a></li>
+          <li><a href="/admin">Admin</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4 class="footer-title">Contact Info</h4>
+        <ul class="footer-contact">
+          <li><i class="fas fa-map-marker-alt"></i> Yll Morina pn, Gjakov&euml; 50000</li>
+          <li><i class="fas fa-phone-alt"></i> +383 44 168 776</li>
+          <li><i class="fas fa-phone-alt"></i> +383 45 660 127</li>
+          <li><i class="fas fa-envelope"></i> info@forkncork.com</li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4 class="footer-title">Opening Hours</h4>
+        <ul class="footer-hours">
+          <li><span>Mon &ndash; Sun</span><span>08:00 &ndash; 24:00</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bar">
+      <div class="container">
+        <p>&copy; 2026 Fork n Cork. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ======================================================================
+       CART SIDEBAR
+       ====================================================================== -->
+  <div class="cart-overlay" id="cart-overlay"></div>
+  <aside class="cart-sidebar" id="cart-sidebar">
+    <div class="cart-header">
+      <h3>Your Cart</h3>
+      <button class="cart-close" id="cart-close" aria-label="Close cart">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+
+    <div class="cart-body" id="cart-items">
+      <p class="cart-empty">Your cart is empty.</p>
+    </div>
+
+    <div class="cart-footer">
+      <div class="cart-total">
+        <span>Total:</span>
+        <span id="cart-total">$0.00</span>
+      </div>
+      <button class="btn btn-primary btn-block" id="checkout-btn" disabled>
+        Proceed to Checkout
+      </button>
+    </div>
+  </aside>
+
+  <!-- ======================================================================
+       CHECKOUT MODAL
+       ====================================================================== -->
+  <div class="modal-overlay" id="checkout-overlay">
+    <div class="modal" id="checkout-modal">
+      <div class="modal-header">
+        <h3>Checkout</h3>
+        <button class="modal-close" id="checkout-close" aria-label="Close checkout">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <form id="checkout-form" novalidate>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="checkout-name">Full Name <span class="required">*</span></label>
+              <input type="text" id="checkout-name" name="customer_name" required placeholder="John Doe">
+            </div>
+            <div class="form-group">
+              <label for="checkout-email">Email <span class="required">*</span></label>
+              <input type="email" id="checkout-email" name="customer_email" required placeholder="john@example.com">
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="checkout-phone">Phone <span class="required">*</span></label>
+              <input type="tel" id="checkout-phone" name="customer_phone" required placeholder="(555) 000-0000">
+            </div>
+            <div class="form-group">
+              <label for="checkout-order-type">Order Type <span class="required">*</span></label>
+              <select id="checkout-order-type" name="order_type" required>
+                <option value="">Select type</option>
+                <option value="dine-in">Dine-In</option>
+                <option value="takeaway">Takeaway</option>
+                <option value="delivery">Delivery</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group" id="checkout-address-group">
+            <label for="checkout-address">Delivery Address</label>
+            <input type="text" id="checkout-address" name="address" placeholder="123 Main St, Springfield">
+          </div>
+
+          <div class="form-group">
+            <label for="checkout-notes">Order Notes</label>
+            <textarea id="checkout-notes" name="notes" rows="3" placeholder="Any special instructions..."></textarea>
+          </div>
+
+          <div class="order-summary" id="checkout-summary">
+            <!-- Populated by JS -->
+          </div>
+
+          <div class="checkout-total">
+            <span>Order Total:</span>
+            <strong id="checkout-total">$0.00</strong>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-block">
+            <i class="fas fa-check"></i> Place Order
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================================
+       SCRIPTS
+       ====================================================================== -->
+  <script src="/js/app.js"></script>
+  <script src="/js/checkout.js"></script>
+  <script src="/js/menu.js"></script>
+  <script>
+    window.addEventListener('scroll', () => {
+      const header = document.getElementById('header');
+      if (header) header.classList.toggle('scrolled', window.scrollY > 50);
+    });
+  </script>
+
+</body>
+</html>
