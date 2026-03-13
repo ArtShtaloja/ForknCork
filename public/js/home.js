@@ -3,7 +3,8 @@
  * Fetches and renders featured products.
  */
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
+  await ProductImages.load();
   loadFeaturedProducts();
 });
 
@@ -11,12 +12,7 @@ const loadFeaturedProducts = async () => {
   const container = document.getElementById('featured-products');
   if (!container) return;
 
-  container.innerHTML = `
-    <div class="loading-spinner">
-      <div class="spinner"></div>
-      <p>Loading featured dishes...</p>
-    </div>
-  `;
+  container.innerHTML = '<div class="spinner"></div>';
 
   try {
     const res = await fetch(`${API_BASE}/products/featured`, {
@@ -31,11 +27,7 @@ const loadFeaturedProducts = async () => {
     const products = json.data;
 
     if (!products || products.length === 0) {
-      container.innerHTML = `
-        <div class="empty-state">
-          <p>No featured dishes at the moment. Check back soon!</p>
-        </div>
-      `;
+      container.innerHTML = '<div class="no-products"><p>No featured dishes at the moment.</p></div>';
       return;
     }
 
@@ -44,40 +36,38 @@ const loadFeaturedProducts = async () => {
   } catch (err) {
     console.error('Error loading featured products:', err);
     container.innerHTML = `
-      <div class="error-state">
-        <p>Unable to load featured dishes. Please try again later.</p>
-        <button class="btn btn-primary" onclick="loadFeaturedProducts()">Retry</button>
+      <div class="no-products">
+        <p>Unable to load featured dishes.</p>
+        <button class="btn btn-primary btn-sm" onclick="loadFeaturedProducts()">Retry</button>
       </div>
     `;
   }
 };
 
 const renderFeaturedCard = (product) => {
-  const imageUrl = product.image_url
-    ? product.image_url
-    : '/images/placeholder-food.jpg';
+  const imageUrl = ProductImages.resolve(product);
 
   return `
-    <div class="product-card featured-card" data-product-id="${product.id}">
-      <div class="product-card-image">
+    <div class="product-card" data-product-id="${product.id}">
+      <div class="product-card-img">
         <img src="${imageUrl}" alt="${product.name}" loading="lazy">
-        ${product.is_featured ? '<span class="badge badge-featured">Featured</span>' : ''}
+        ${product.is_featured ? '<span class="product-card-badge">Featured</span>' : ''}
       </div>
       <div class="product-card-body">
-        <h3 class="product-card-title">${product.name}</h3>
-        <p class="product-card-description">
-          ${product.description ? product.description.substring(0, 100) + (product.description.length > 100 ? '...' : '') : ''}
-        </p>
+        ${product.category_name ? `<span class="product-card-category">${product.category_name}</span>` : ''}
+        <h3 class="product-card-name">${product.name}</h3>
+        <p class="product-card-desc">${product.description ? product.description.substring(0, 100) : ''}</p>
         <div class="product-card-footer">
-          <span class="product-card-price">${formatPrice(product.price)}</span>
+          <span class="product-card-price"><span class="currency">&euro;</span>${parseFloat(product.price).toFixed(2)}</span>
           <button
-            class="btn btn-primary btn-add-to-cart"
+            class="add-cart-btn"
             data-id="${product.id}"
             data-name="${product.name}"
             data-price="${product.price}"
             data-image="${imageUrl}"
+            aria-label="Add to cart"
           >
-            Add to Cart
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
           </button>
         </div>
       </div>
@@ -86,7 +76,7 @@ const renderFeaturedCard = (product) => {
 };
 
 const attachAddToCartHandlers = (container) => {
-  container.querySelectorAll('.btn-add-to-cart').forEach((btn) => {
+  container.querySelectorAll('.add-cart-btn').forEach((btn) => {
     btn.addEventListener('click', (e) => {
       e.preventDefault();
       e.stopPropagation();
@@ -103,14 +93,11 @@ const attachAddToCartHandlers = (container) => {
     });
   });
 
-  // Clicking the card itself navigates to the product detail page
   container.querySelectorAll('.product-card').forEach((card) => {
     card.addEventListener('click', (e) => {
-      if (e.target.closest('.btn-add-to-cart')) return;
+      if (e.target.closest('.add-cart-btn')) return;
       const productId = card.dataset.productId;
       window.location.href = `/menu/product?id=${productId}`;
     });
-
-    card.style.cursor = 'pointer';
   });
 };

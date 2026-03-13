@@ -13,10 +13,10 @@ const initContactForm = () => {
 
   form.addEventListener('submit', handleContactSubmit);
 
-  // Clear field errors on input
   form.querySelectorAll('input, textarea, select').forEach((field) => {
     field.addEventListener('input', () => {
-      clearFieldError(field);
+      const group = field.closest('.form-group');
+      if (group) group.classList.remove('error');
     });
   });
 };
@@ -27,7 +27,6 @@ const handleContactSubmit = async (e) => {
   const form = e.target;
   const submitBtn = form.querySelector('button[type="submit"]');
 
-  // Gather form data
   const data = {
     name: form.querySelector('#contact-name')?.value.trim() || '',
     email: form.querySelector('#contact-email')?.value.trim() || '',
@@ -36,17 +35,26 @@ const handleContactSubmit = async (e) => {
     message: form.querySelector('#contact-message')?.value.trim() || '',
   };
 
-  // Validate
   const errors = validateContactForm(data);
   if (errors.length > 0) {
-    errors.forEach(({ field, message }) => showFieldError(field, message));
+    errors.forEach(({ field, message }) => {
+      const el = document.getElementById(field);
+      if (el) {
+        const group = el.closest('.form-group');
+        if (group) {
+          group.classList.add('error');
+          const errEl = group.querySelector('.form-error');
+          if (errEl) errEl.textContent = message;
+        }
+      }
+    });
     showToast('Please fix the errors in the form', 'error');
     return;
   }
 
-  // Submit
   submitBtn.disabled = true;
-  submitBtn.textContent = 'Sending...';
+  const sendingText = typeof I18n !== 'undefined' ? I18n.t('contact.sending') : 'Sending...';
+  submitBtn.textContent = sendingText;
 
   try {
     const res = await fetch(`${API_BASE}/contact`, {
@@ -62,14 +70,18 @@ const handleContactSubmit = async (e) => {
       throw new Error(json.message || 'Failed to send message');
     }
 
-    showToast('Your message has been sent! We will get back to you soon.', 'success');
+    showToast(
+      typeof I18n !== 'undefined' ? I18n.t('contact.successMsg') : 'Message sent successfully!',
+      'success'
+    );
     form.reset();
   } catch (err) {
     console.error('Contact form error:', err);
-    showToast(err.message || 'Failed to send message. Please try again.', 'error');
+    showToast(err.message || 'Failed to send message.', 'error');
   } finally {
     submitBtn.disabled = false;
-    submitBtn.textContent = 'Send Message';
+    const sendText = typeof I18n !== 'undefined' ? I18n.t('contact.send') : 'Send Message';
+    submitBtn.textContent = sendText;
   }
 };
 
@@ -84,11 +96,11 @@ const validateContactForm = (data) => {
 
   if (!data.email) {
     errors.push({ field: 'contact-email', message: 'Email is required' });
-  } else if (!isValidEmail(data.email)) {
-    errors.push({ field: 'contact-email', message: 'Please enter a valid email address' });
+  } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) {
+    errors.push({ field: 'contact-email', message: 'Please enter a valid email' });
   }
 
-  if (data.phone && !isValidPhone(data.phone)) {
+  if (data.phone && !/^[\d\s\-+()]{7,20}$/.test(data.phone)) {
     errors.push({ field: 'contact-phone', message: 'Please enter a valid phone number' });
   }
 
@@ -103,34 +115,4 @@ const validateContactForm = (data) => {
   }
 
   return errors;
-};
-
-const isValidEmail = (email) => {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-};
-
-const isValidPhone = (phone) => {
-  return /^[\d\s\-+()]{7,20}$/.test(phone);
-};
-
-const showFieldError = (fieldId, message) => {
-  const field = document.getElementById(fieldId);
-  if (!field) return;
-
-  field.classList.add('is-invalid');
-
-  // Remove existing error message
-  const existingErr = field.parentElement.querySelector('.field-error');
-  if (existingErr) existingErr.remove();
-
-  const errorEl = document.createElement('div');
-  errorEl.className = 'field-error';
-  errorEl.textContent = message;
-  field.parentElement.appendChild(errorEl);
-};
-
-const clearFieldError = (field) => {
-  field.classList.remove('is-invalid');
-  const errorEl = field.parentElement.querySelector('.field-error');
-  if (errorEl) errorEl.remove();
 };

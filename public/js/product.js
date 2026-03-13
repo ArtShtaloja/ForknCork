@@ -5,7 +5,8 @@
 
 let selectedQuantity = 1;
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
+  await ProductImages.load();
   const productId = new URLSearchParams(window.location.search).get('id');
 
   if (!productId) {
@@ -20,12 +21,7 @@ const loadProduct = async (productId) => {
   const container = document.getElementById('product-detail');
   if (!container) return;
 
-  container.innerHTML = `
-    <div class="loading-spinner">
-      <div class="spinner"></div>
-      <p>Loading product details...</p>
-    </div>
-  `;
+  container.innerHTML = '<div class="spinner"></div>';
 
   try {
     const res = await fetch(`${API_BASE}/products/${productId}`, {
@@ -41,9 +37,7 @@ const loadProduct = async (productId) => {
     renderProduct(product);
   } catch (err) {
     console.error('Error loading product:', err);
-    showProductError(
-      'Unable to load product details. The product may no longer be available.'
-    );
+    showProductError('Unable to load product details.');
   }
 };
 
@@ -51,42 +45,41 @@ const renderProduct = (product) => {
   const container = document.getElementById('product-detail');
   if (!container) return;
 
-  const imageUrl = product.image_url || '/images/placeholder-food.jpg';
+  const imageUrl = ProductImages.resolve(product);
+
+  // Update page title and breadcrumb
+  document.title = `${product.name} - Fork n Cork`;
+  const breadcrumb = document.getElementById('product-breadcrumb');
+  if (breadcrumb) breadcrumb.textContent = product.name;
+  const titleBanner = document.getElementById('product-title-banner');
+  if (titleBanner) titleBanner.textContent = product.name;
 
   container.innerHTML = `
-    <div class="product-detail-grid">
-      <div class="product-detail-image">
-        <img src="${imageUrl}" alt="${product.name}" id="product-main-image">
-      </div>
-      <div class="product-detail-info">
-        ${product.category_name ? `<span class="product-detail-category">${product.category_name}</span>` : ''}
-        <h1 class="product-detail-title">${product.name}</h1>
-        <p class="product-detail-price">${formatPrice(product.price)}</p>
+    <div class="product-detail-img">
+      <img src="${imageUrl}" alt="${product.name}">
+    </div>
+    <div class="product-detail-info">
+      ${product.category_name ? `<span class="product-detail-category">${product.category_name}</span>` : ''}
+      <h1 class="product-detail-name">${product.name}</h1>
+      ${product.description ? `<p class="product-detail-desc">${product.description}</p>` : ''}
+      <div class="product-detail-price" id="product-price">${formatPrice(product.price)}</div>
 
-        ${product.description ? `<div class="product-detail-description"><p>${product.description}</p></div>` : ''}
-
-        <div class="product-detail-actions">
-          <div class="quantity-selector">
-            <button class="qty-btn" id="qty-decrease" aria-label="Decrease quantity">-</button>
-            <span class="qty-value" id="qty-display">1</span>
-            <button class="qty-btn" id="qty-increase" aria-label="Increase quantity">+</button>
-          </div>
-          <button
-            class="btn btn-primary btn-lg btn-add-to-cart-detail"
-            id="add-to-cart-btn"
-            data-id="${product.id}"
-            data-name="${product.name}"
-            data-price="${product.price}"
-            data-image="${imageUrl}"
-          >
-            Add to Cart - ${formatPrice(product.price)}
-          </button>
+      <div class="product-detail-actions">
+        <div class="quantity-selector">
+          <button id="qty-decrease" aria-label="Decrease quantity">-</button>
+          <span class="qty-display" id="qty-display">1</span>
+          <button id="qty-increase" aria-label="Increase quantity">+</button>
         </div>
-
-        <div class="product-detail-meta">
-          ${product.is_featured ? '<span class="badge badge-featured">Featured Dish</span>' : ''}
-          ${product.is_available === false ? '<span class="badge badge-unavailable">Currently Unavailable</span>' : ''}
-        </div>
+        <button
+          class="btn btn-primary btn-lg"
+          id="add-to-cart-btn"
+          data-id="${product.id}"
+          data-name="${product.name}"
+          data-price="${product.price}"
+          data-image="${imageUrl}"
+        >
+          ${typeof I18n !== 'undefined' ? I18n.t('product.addToCart') : 'Add to Cart'} - ${formatPrice(product.price)}
+        </button>
       </div>
     </div>
   `;
@@ -110,7 +103,8 @@ const initQuantityControls = (product) => {
 
     if (addBtn) {
       const total = product.price * selectedQuantity;
-      addBtn.textContent = `Add to Cart - ${formatPrice(total)}`;
+      const label = typeof I18n !== 'undefined' ? I18n.t('product.addToCart') : 'Add to Cart';
+      addBtn.textContent = `${label} - ${formatPrice(total)}`;
     }
   };
 
@@ -146,18 +140,19 @@ const initAddToCartButton = (product) => {
       name: product.name,
       price: parseFloat(product.price),
       quantity: selectedQuantity,
-      image: product.image_url || '/images/placeholder-food.jpg',
+      image: ProductImages.resolve(product),
     };
 
     addToCart(cartProduct);
 
-    // Brief visual feedback on the button
-    addBtn.textContent = 'Added!';
+    const label = typeof I18n !== 'undefined' ? I18n.t('product.added') : 'Added!';
+    addBtn.textContent = label;
     addBtn.disabled = true;
     setTimeout(() => {
       addBtn.disabled = false;
       const total = product.price * selectedQuantity;
-      addBtn.textContent = `Add to Cart - ${formatPrice(total)}`;
+      const addLabel = typeof I18n !== 'undefined' ? I18n.t('product.addToCart') : 'Add to Cart';
+      addBtn.textContent = `${addLabel} - ${formatPrice(total)}`;
     }, 1000);
   });
 };
@@ -167,10 +162,9 @@ const showProductError = (message) => {
   if (!container) return;
 
   container.innerHTML = `
-    <div class="error-state">
-      <h2>Oops!</h2>
+    <div class="no-products" style="grid-column:1/-1">
       <p>${message}</p>
-      <a href="/menu" class="btn btn-primary">Back to Menu</a>
+      <a href="/menu" class="btn btn-primary btn-sm">Back to Menu</a>
     </div>
   `;
 };

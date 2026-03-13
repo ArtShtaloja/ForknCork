@@ -3,306 +3,191 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Fork n Cork - Product Details</title>
+  <title>Product - Fork n Cork</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@500;600&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
 
-  <!-- ======================================================================
-       HEADER
-       ====================================================================== -->
-  <header class="header" id="header">
-    <div class="container header-inner">
-      <a href="/" class="logo">
-        <i class="fas fa-utensils"></i>
-        <span>Fork <em>n</em> Cork</span>
-      </a>
-
-      <nav class="nav" id="nav">
-        <ul class="nav-list">
-          <li><a href="/" class="nav-link">Home</a></li>
-          <li><a href="/menu" class="nav-link active">Menu</a></li>
-          <li><a href="/contact" class="nav-link">Contact</a></li>
-        </ul>
-      </nav>
-
-      <div class="header-actions">
-        <button class="cart-toggle" id="cart-toggle" aria-label="Open cart">
-          <i class="fas fa-shopping-cart"></i>
-          <span class="cart-badge" id="cart-badge">0</span>
-        </button>
-        <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle menu">
-          <i class="fas fa-bars"></i>
-        </button>
+<header class="header scrolled" id="header">
+  <div class="header-inner">
+    <a href="/" class="logo">Fork <span>n</span> Cork</a>
+    <nav class="nav" id="nav">
+      <a href="/" class="nav-link" data-i18n="nav.home">Home</a>
+      <a href="/menu" class="nav-link active" data-i18n="nav.menu">Menu</a>
+      <a href="/contact" class="nav-link" data-i18n="nav.contact">Contact</a>
+    </nav>
+    <div class="header-actions">
+      <div class="lang-toggle">
+        <button class="lang-btn active" data-lang="en">EN</button>
+        <button class="lang-btn" data-lang="al">SQ</button>
       </div>
-    </div>
-  </header>
-
-  <!-- ======================================================================
-       PAGE BANNER
-       ====================================================================== -->
-  <section class="page-banner page-banner-sm" style="background-image: url('/images/forkncork7.jpg')">
-    <div class="page-banner-overlay"></div>
-    <div class="container">
-      <h1 class="page-banner-title" id="product-page-title">Product Details</h1>
-      <nav class="breadcrumb">
-        <a href="/">Home</a>
-        <span>/</span>
-        <a href="/menu">Menu</a>
-        <span>/</span>
-        <span id="breadcrumb-product-name">Product</span>
-      </nav>
-    </div>
-  </section>
-
-  <!-- ======================================================================
-       PRODUCT DETAIL
-       ====================================================================== -->
-  <section class="section product-detail-section" id="product-detail">
-    <div class="container">
-
-      <!-- Loading Spinner -->
-      <div class="loading-spinner" id="product-loading">
-        <i class="fas fa-spinner fa-spin"></i>
-        <p>Loading product...</p>
-      </div>
-
-      <!-- Product Content (hidden until loaded) -->
-      <div class="product-detail hidden" id="product-content">
-        <div class="product-detail-grid">
-
-          <!-- Product Image -->
-          <div class="product-detail-image">
-            <img src="" alt="" id="product-image" loading="lazy">
-          </div>
-
-          <!-- Product Info -->
-          <div class="product-detail-info">
-            <span class="product-detail-category" id="product-category"></span>
-            <h2 class="product-detail-name" id="product-name"></h2>
-            <p class="product-detail-desc" id="product-description"></p>
-
-            <div class="product-detail-price" id="product-price"></div>
-
-            <!-- Quantity Selector -->
-            <div class="quantity-selector">
-              <label>Quantity:</label>
-              <div class="quantity-controls">
-                <button
-                  type="button"
-                  class="quantity-btn quantity-decrease"
-                  id="qty-decrease"
-                  aria-label="Decrease quantity"
-                >
-                  <i class="fas fa-minus"></i>
-                </button>
-                <input
-                  type="number"
-                  id="product-qty"
-                  class="quantity-input"
-                  value="1"
-                  min="1"
-                  max="20"
-                  readonly
-                >
-                <button
-                  type="button"
-                  class="quantity-btn quantity-increase"
-                  id="qty-increase"
-                  aria-label="Increase quantity"
-                >
-                  <i class="fas fa-plus"></i>
-                </button>
-              </div>
-            </div>
-
-            <!-- Add to Cart -->
-            <button class="btn btn-primary btn-lg" id="add-to-cart-btn">
-              <i class="fas fa-cart-plus"></i> Add to Cart
-            </button>
-
-            <a href="/menu" class="btn btn-outline back-to-menu">
-              <i class="fas fa-arrow-left"></i> Back to Menu
-            </a>
-          </div>
-
-        </div>
-      </div>
-
-      <!-- Not Found State -->
-      <div class="empty-state hidden" id="product-not-found">
-        <i class="fas fa-exclamation-circle"></i>
-        <p>Product not found.</p>
-        <a href="/menu" class="btn btn-primary">Browse Our Menu</a>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- ======================================================================
-       FOOTER
-       ====================================================================== -->
-  <footer class="footer">
-    <div class="container footer-grid">
-      <div class="footer-col">
-        <h4 class="footer-title">About Fork n Cork</h4>
-        <p>
-          Great food, great vibes. We serve handcrafted meals made with the freshest
-          ingredients in town. Come hungry, leave happy.
-        </p>
-        <div class="footer-socials">
-          <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-          <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-          <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-        </div>
-      </div>
-
-      <div class="footer-col">
-        <h4 class="footer-title">Quick Links</h4>
-        <ul class="footer-links">
-          <li><a href="/">Home</a></li>
-          <li><a href="/menu">Menu</a></li>
-          <li><a href="/contact">Contact</a></li>
-          <li><a href="/admin">Admin</a></li>
-        </ul>
-      </div>
-
-      <div class="footer-col">
-        <h4 class="footer-title">Contact Info</h4>
-        <ul class="footer-contact">
-          <li><i class="fas fa-map-marker-alt"></i> Yll Morina pn, Gjakov&euml; 50000</li>
-          <li><i class="fas fa-phone-alt"></i> +383 44 168 776</li>
-          <li><i class="fas fa-phone-alt"></i> +383 45 660 127</li>
-          <li><i class="fas fa-envelope"></i> info@forkncork.com</li>
-        </ul>
-      </div>
-
-      <div class="footer-col">
-        <h4 class="footer-title">Opening Hours</h4>
-        <ul class="footer-hours">
-          <li><span>Mon &ndash; Sun</span><span>08:00 &ndash; 24:00</span></li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="footer-bar">
-      <div class="container">
-        <p>&copy; 2026 Fork n Cork. All rights reserved.</p>
-      </div>
-    </div>
-  </footer>
-
-  <!-- ======================================================================
-       CART SIDEBAR
-       ====================================================================== -->
-  <div class="cart-overlay" id="cart-overlay"></div>
-  <aside class="cart-sidebar" id="cart-sidebar">
-    <div class="cart-header">
-      <h3>Your Cart</h3>
-      <button class="cart-close" id="cart-close" aria-label="Close cart">
-        <i class="fas fa-times"></i>
+      <button class="btn-icon cart-btn" id="cart-toggle" aria-label="Cart">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+        <span class="cart-badge" id="cart-badge">0</span>
       </button>
-    </div>
-
-    <div class="cart-body" id="cart-items">
-      <p class="cart-empty">Your cart is empty.</p>
-    </div>
-
-    <div class="cart-footer">
-      <div class="cart-total">
-        <span>Total:</span>
-        <span id="cart-total">$0.00</span>
-      </div>
-      <button class="btn btn-primary btn-block" id="checkout-btn" disabled>
-        Proceed to Checkout
+      <button class="mobile-toggle" id="mobile-toggle" aria-label="Menu">
+        <span></span><span></span><span></span>
       </button>
-    </div>
-  </aside>
-
-  <!-- ======================================================================
-       CHECKOUT MODAL
-       ====================================================================== -->
-  <div class="modal-overlay" id="checkout-overlay">
-    <div class="modal" id="checkout-modal">
-      <div class="modal-header">
-        <h3>Checkout</h3>
-        <button class="modal-close" id="checkout-close" aria-label="Close checkout">
-          <i class="fas fa-times"></i>
-        </button>
-      </div>
-
-      <div class="modal-body">
-        <form id="checkout-form" novalidate>
-          <div class="form-row">
-            <div class="form-group">
-              <label for="checkout-name">Full Name <span class="required">*</span></label>
-              <input type="text" id="checkout-name" name="customer_name" required placeholder="John Doe">
-            </div>
-            <div class="form-group">
-              <label for="checkout-email">Email <span class="required">*</span></label>
-              <input type="email" id="checkout-email" name="customer_email" required placeholder="john@example.com">
-            </div>
-          </div>
-
-          <div class="form-row">
-            <div class="form-group">
-              <label for="checkout-phone">Phone <span class="required">*</span></label>
-              <input type="tel" id="checkout-phone" name="customer_phone" required placeholder="(555) 000-0000">
-            </div>
-            <div class="form-group">
-              <label for="checkout-order-type">Order Type <span class="required">*</span></label>
-              <select id="checkout-order-type" name="order_type" required>
-                <option value="">Select type</option>
-                <option value="dine-in">Dine-In</option>
-                <option value="takeaway">Takeaway</option>
-                <option value="delivery">Delivery</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="form-group" id="checkout-address-group">
-            <label for="checkout-address">Delivery Address</label>
-            <input type="text" id="checkout-address" name="address" placeholder="123 Main St, Springfield">
-          </div>
-
-          <div class="form-group">
-            <label for="checkout-notes">Order Notes</label>
-            <textarea id="checkout-notes" name="notes" rows="3" placeholder="Any special instructions..."></textarea>
-          </div>
-
-          <div class="order-summary" id="checkout-summary">
-            <!-- Populated by JS -->
-          </div>
-
-          <div class="checkout-total">
-            <span>Order Total:</span>
-            <strong id="checkout-total">$0.00</strong>
-          </div>
-
-          <button type="submit" class="btn btn-primary btn-block">
-            <i class="fas fa-check"></i> Place Order
-          </button>
-        </form>
-      </div>
     </div>
   </div>
+</header>
+<div class="nav-overlay" id="nav-overlay"></div>
 
-  <!-- ======================================================================
-       SCRIPTS
-       ====================================================================== -->
-  <script src="/js/app.js"></script>
-  <script src="/js/checkout.js"></script>
-  <script src="/js/product.js"></script>
-  <script>
-    window.addEventListener('scroll', () => {
-      const header = document.getElementById('header');
-      if (header) header.classList.toggle('scrolled', window.scrollY > 50);
+<section class="page-banner">
+  <div class="container">
+    <div class="breadcrumb">
+      <a href="/" data-i18n="nav.home">Home</a>
+      <span>/</span>
+      <a href="/menu" data-i18n="product.breadcrumbMenu">Menu</a>
+      <span>/</span>
+      <span id="product-breadcrumb">Product</span>
+    </div>
+    <h1 id="product-title-banner" data-i18n="nav.menu">Menu</h1>
+  </div>
+</section>
+
+<section class="section section-dark">
+  <div class="container">
+    <div class="product-detail" id="product-detail">
+      <div class="spinner"></div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="/" class="logo">Fork <span>n</span> Cork</a>
+        <p data-i18n="footer.description">Premium fast food crafted with passion.</p>
+      </div>
+      <div>
+        <h4 data-i18n="footer.quickLinks">Quick Links</h4>
+        <ul class="footer-links">
+          <li><a href="/" data-i18n="nav.home">Home</a></li>
+          <li><a href="/menu" data-i18n="nav.menu">Menu</a></li>
+          <li><a href="/contact" data-i18n="nav.contact">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 data-i18n="footer.openingHours">Opening Hours</h4>
+        <ul class="footer-hours">
+          <li><span>Mon - Sun</span><span>08:00 - 24:00</span></li>
+        </ul>
+      </div>
+      <div>
+        <h4 data-i18n="footer.followUs">Follow Us</h4>
+        <p style="color:var(--text-dim);font-size:.9rem">info@forkncork.com</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 Fork n Cork. <span data-i18n="footer.rights">All rights reserved.</span></p>
+    </div>
+  </div>
+</footer>
+
+<div class="cart-overlay" id="cart-overlay"></div>
+<aside class="cart-sidebar" id="cart-sidebar">
+  <div class="cart-header">
+    <h2 data-i18n="cart.title">Your Cart</h2>
+    <button class="modal-close" id="cart-close" aria-label="Close cart">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+  <div class="cart-items" id="cart-items">
+    <div class="cart-empty">
+      <p data-i18n="cart.empty">Your cart is empty</p>
+    </div>
+  </div>
+  <div class="cart-footer">
+    <div class="cart-total">
+      <span data-i18n="cart.total">Total</span>
+      <span class="amount" id="cart-total">&euro;0.00</span>
+    </div>
+    <button class="btn btn-primary" id="checkout-btn" disabled data-i18n="cart.checkout">Checkout</button>
+  </div>
+</aside>
+
+<div class="modal-overlay" id="checkout-overlay">
+  <div class="modal" id="checkout-modal">
+    <div class="modal-header">
+      <h2 data-i18n="checkout.title">Complete Your Order</h2>
+      <button class="modal-close" id="checkout-close" aria-label="Close">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div id="checkout-summary"></div>
+      <form id="checkout-form" novalidate>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="checkout-name" data-i18n="checkout.name">Full Name</label>
+            <input class="form-input" type="text" id="checkout-name" name="customer_name" required placeholder="John Doe">
+            <p class="form-error"></p>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="checkout-email" data-i18n="checkout.email">Email</label>
+            <input class="form-input" type="email" id="checkout-email" name="customer_email" required placeholder="john@example.com">
+            <p class="form-error"></p>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="checkout-phone" data-i18n="checkout.phone">Phone</label>
+            <input class="form-input" type="tel" id="checkout-phone" name="customer_phone" required placeholder="+383 44 123 456">
+            <p class="form-error"></p>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="checkout-order-type" data-i18n="checkout.orderType">Order Type</label>
+            <select class="form-select" id="checkout-order-type" name="order_type" required>
+              <option value="">—</option>
+              <option value="dine-in">Dine In</option>
+              <option value="takeaway">Takeaway</option>
+              <option value="delivery">Delivery</option>
+            </select>
+            <p class="form-error"></p>
+          </div>
+        </div>
+        <div class="form-group" id="checkout-address-group" style="display:none">
+          <label class="form-label" for="checkout-address" data-i18n="checkout.address">Delivery Address</label>
+          <input class="form-input" type="text" id="checkout-address" name="address" placeholder="Your delivery address">
+          <p class="form-error"></p>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="checkout-notes" data-i18n="checkout.notes">Order Notes</label>
+          <textarea class="form-textarea" id="checkout-notes" name="notes" rows="3" placeholder="Any special requests..."></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary btn-lg" style="width:100%;justify-content:center" data-i18n="checkout.placeOrder">Place Order</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="toast-container" id="toast-container"></div>
+
+<script src="/js/i18n.js"></script>
+<script src="/js/app.js"></script>
+<script src="/js/checkout.js"></script>
+<script src="/js/product-images.js"></script>
+<script src="/js/product.js"></script>
+<script>
+  const mobileToggle = document.getElementById('mobile-toggle');
+  const nav = document.getElementById('nav');
+  const navOverlay = document.getElementById('nav-overlay');
+  if (mobileToggle) {
+    mobileToggle.addEventListener('click', () => {
+      nav.classList.toggle('open');
+      navOverlay.classList.toggle('open');
     });
-  </script>
-
+    navOverlay.addEventListener('click', () => {
+      nav.classList.remove('open');
+      navOverlay.classList.remove('open');
+    });
+  }
+  I18n.init();
+</script>
 </body>
 </html>

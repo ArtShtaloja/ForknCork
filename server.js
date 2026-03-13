@@ -90,7 +90,32 @@ app.get('/admin/login', (_req, res) => {
   res.sendFile(path.join(__dirname, 'views', 'admin', 'login.html'));
 });
 
+// All admin sub-routes serve the SPA dashboard
 app.get('/admin/dashboard', (_req, res) => {
+  res.sendFile(path.join(__dirname, 'views', 'admin', 'dashboard.html'));
+});
+
+app.get('/admin/products', (_req, res) => {
+  res.sendFile(path.join(__dirname, 'views', 'admin', 'dashboard.html'));
+});
+
+app.get('/admin/categories', (_req, res) => {
+  res.sendFile(path.join(__dirname, 'views', 'admin', 'dashboard.html'));
+});
+
+app.get('/admin/orders', (_req, res) => {
+  res.sendFile(path.join(__dirname, 'views', 'admin', 'dashboard.html'));
+});
+
+app.get('/admin/messages', (_req, res) => {
+  res.sendFile(path.join(__dirname, 'views', 'admin', 'dashboard.html'));
+});
+
+app.get('/admin/images', (_req, res) => {
+  res.sendFile(path.join(__dirname, 'views', 'admin', 'dashboard.html'));
+});
+
+app.get('/admin/settings', (_req, res) => {
   res.sendFile(path.join(__dirname, 'views', 'admin', 'dashboard.html'));
 });
 

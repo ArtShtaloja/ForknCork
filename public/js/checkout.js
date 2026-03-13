@@ -1,5 +1,5 @@
 /**
- * Fork n Cork - Checkout Page JS
+ * Fork n Cork - Checkout JS
  * Renders order summary from cart, handles order submission.
  */
 
@@ -18,26 +18,32 @@ const initCheckoutModal = () => {
   const closeBtn = document.getElementById('checkout-close');
   if (!overlay) return;
 
-  // Close button
   if (closeBtn) {
     closeBtn.addEventListener('click', () => {
-      overlay.classList.remove('active');
+      overlay.classList.remove('open');
     });
   }
 
-  // Click outside modal to close
   overlay.addEventListener('click', (e) => {
     if (e.target === overlay) {
-      overlay.classList.remove('active');
+      overlay.classList.remove('open');
     }
   });
 
-  // Escape key to close
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && overlay.classList.contains('active')) {
-      overlay.classList.remove('active');
+    if (e.key === 'Escape' && overlay.classList.contains('open')) {
+      overlay.classList.remove('open');
     }
   });
+
+  // Show/hide address field based on order type
+  const orderType = document.getElementById('checkout-order-type');
+  const addressGroup = document.getElementById('checkout-address-group');
+  if (orderType && addressGroup) {
+    orderType.addEventListener('change', () => {
+      addressGroup.style.display = orderType.value === 'delivery' ? 'block' : 'none';
+    });
+  }
 };
 
 // ---------------------------------------------------------------------------
@@ -46,32 +52,32 @@ const initCheckoutModal = () => {
 
 const renderOrderSummary = () => {
   const container = document.getElementById('checkout-summary');
-  const totalEl = document.getElementById('checkout-total');
   if (!container) return;
 
   const cart = getCart();
 
   if (cart.length === 0) {
     container.innerHTML = `
-      <div class="empty-state">
+      <div class="no-products" style="padding:1rem 0">
         <p>Your cart is empty.</p>
-        <a href="/menu" class="btn btn-primary">Browse Menu</a>
+        <a href="/menu" class="btn btn-primary btn-sm">Browse Menu</a>
       </div>
     `;
-    // Disable checkout form
     const form = document.getElementById('checkout-form');
     if (form) form.style.display = 'none';
     return;
   }
 
+  const form = document.getElementById('checkout-form');
+  if (form) form.style.display = 'block';
+
   container.innerHTML = `
-    <table class="order-summary-table">
+    <table class="order-summary">
       <thead>
         <tr>
-          <th>Item</th>
-          <th>Qty</th>
-          <th>Price</th>
-          <th>Subtotal</th>
+          <th>${typeof I18n !== 'undefined' ? I18n.t('checkout.item') : 'Item'}</th>
+          <th>${typeof I18n !== 'undefined' ? I18n.t('checkout.qty') : 'Qty'}</th>
+          <th>${typeof I18n !== 'undefined' ? I18n.t('checkout.price') : 'Price'}</th>
         </tr>
       </thead>
       <tbody>
@@ -79,24 +85,22 @@ const renderOrderSummary = () => {
           .map(
             (item) => `
           <tr>
-            <td class="order-item-name">
-              ${item.image ? `<img src="${item.image}" alt="${item.name}" class="order-item-thumb">` : ''}
-              ${item.name}
-            </td>
+            <td>${item.name}</td>
             <td>${item.quantity}</td>
-            <td>${formatPrice(item.price)}</td>
             <td>${formatPrice(item.price * item.quantity)}</td>
           </tr>
         `
           )
           .join('')}
       </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="2">${typeof I18n !== 'undefined' ? I18n.t('checkout.total') : 'Total'}</td>
+          <td>${formatPrice(getCartTotal())}</td>
+        </tr>
+      </tfoot>
     </table>
   `;
-
-  if (totalEl) {
-    totalEl.textContent = formatPrice(getCartTotal());
-  }
 };
 
 // ---------------------------------------------------------------------------
@@ -109,12 +113,10 @@ const initCheckoutForm = () => {
 
   form.addEventListener('submit', handleCheckoutSubmit);
 
-  // Clear errors on input
   form.querySelectorAll('input, textarea, select').forEach((field) => {
     field.addEventListener('input', () => {
-      field.classList.remove('is-invalid');
-      const err = field.parentElement.querySelector('.field-error');
-      if (err) err.remove();
+      const group = field.closest('.form-group');
+      if (group) group.classList.remove('error');
     });
   });
 };
@@ -127,11 +129,10 @@ const handleCheckoutSubmit = async (e) => {
   const cart = getCart();
 
   if (cart.length === 0) {
-    showToast('Your cart is empty', 'warning');
+    showToast('Your cart is empty', 'error');
     return;
   }
 
-  // Gather form data
   const formData = {
     customer_name: form.querySelector('#checkout-name')?.value.trim() || '',
     customer_email: form.querySelector('#checkout-email')?.value.trim() || '',
@@ -141,26 +142,23 @@ const handleCheckoutSubmit = async (e) => {
     notes: form.querySelector('#checkout-notes')?.value.trim() || '',
   };
 
-  // Validate
   const errors = validateCheckoutForm(formData);
   if (errors.length > 0) {
     errors.forEach(({ field, message }) => {
       const el = document.getElementById(field);
       if (el) {
-        el.classList.add('is-invalid');
-        const existingErr = el.parentElement.querySelector('.field-error');
-        if (existingErr) existingErr.remove();
-        const errorEl = document.createElement('div');
-        errorEl.className = 'field-error';
-        errorEl.textContent = message;
-        el.parentElement.appendChild(errorEl);
+        const group = el.closest('.form-group');
+        if (group) {
+          group.classList.add('error');
+          const errEl = group.querySelector('.form-error');
+          if (errEl) errEl.textContent = message;
+        }
       }
     });
     showToast('Please fix the errors in the form', 'error');
     return;
   }
 
-  // Build order payload
   const orderPayload = {
     ...formData,
     items: cart.map((item) => ({
@@ -171,7 +169,8 @@ const handleCheckoutSubmit = async (e) => {
   };
 
   submitBtn.disabled = true;
-  submitBtn.textContent = 'Placing Order...';
+  const placingText = typeof I18n !== 'undefined' ? I18n.t('checkout.placing') : 'Placing Order...';
+  submitBtn.textContent = placingText;
 
   try {
     const res = await fetch(`${API_BASE}/orders`, {
@@ -192,9 +191,10 @@ const handleCheckoutSubmit = async (e) => {
     showOrderConfirmation(order);
   } catch (err) {
     console.error('Checkout error:', err);
-    showToast(err.message || 'Failed to place order. Please try again.', 'error');
+    showToast(err.message || 'Failed to place order.', 'error');
     submitBtn.disabled = false;
-    submitBtn.textContent = 'Place Order';
+    const placeText = typeof I18n !== 'undefined' ? I18n.t('checkout.placeOrder') : 'Place Order';
+    submitBtn.textContent = placeText;
   }
 };
 
@@ -210,7 +210,7 @@ const validateCheckoutForm = (data) => {
   if (!data.customer_email) {
     errors.push({ field: 'checkout-email', message: 'Email is required' });
   } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.customer_email)) {
-    errors.push({ field: 'checkout-email', message: 'Please enter a valid email address' });
+    errors.push({ field: 'checkout-email', message: 'Please enter a valid email' });
   }
 
   if (!data.customer_phone) {
@@ -227,26 +227,22 @@ const validateCheckoutForm = (data) => {
 };
 
 const showOrderConfirmation = (order) => {
-  const main = document.querySelector('.checkout-container') || document.querySelector('main');
-  if (!main) return;
+  const modalBody = document.querySelector('#checkout-modal .modal-body');
+  if (!modalBody) return;
 
   const orderNumber = order.order_number || order.id || 'N/A';
+  const successTitle = typeof I18n !== 'undefined' ? I18n.t('checkout.successTitle') : 'Order Confirmed!';
+  const successMsg = typeof I18n !== 'undefined' ? I18n.t('checkout.successMsg') : 'Your order has been placed successfully.';
 
-  main.innerHTML = `
-    <div class="order-confirmation">
-      <div class="order-confirmation-icon">&#10003;</div>
-      <h1>Order Placed Successfully!</h1>
-      <p class="order-number">Order #${orderNumber}</p>
-      <p>Thank you for your order. We have sent a confirmation to your email.</p>
-      <div class="order-confirmation-details">
-        <p><strong>Order Type:</strong> ${order.order_type || 'Delivery'}</p>
-        <p><strong>Total:</strong> ${formatPrice(order.total_amount || order.total || 0)}</p>
-        <p><strong>Status:</strong> ${order.status || 'Pending'}</p>
+  modalBody.innerHTML = `
+    <div class="order-success">
+      <div class="order-success-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
       </div>
-      <div class="order-confirmation-actions">
-        <a href="/menu" class="btn btn-primary">Back to Menu</a>
-        <a href="/" class="btn btn-secondary">Home</a>
-      </div>
+      <h3>${successTitle}</h3>
+      <p>${successMsg}</p>
+      <div class="order-num">#${orderNumber}</div>
+      <a href="/menu" class="btn btn-primary">${typeof I18n !== 'undefined' ? I18n.t('nav.menu') : 'Menu'}</a>
     </div>
   `;
 

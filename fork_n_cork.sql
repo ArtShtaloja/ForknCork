@@ -229,7 +229,7 @@ CREATE TABLE IF NOT EXISTS `reviews` (
 -- Admin user
 -- ------------------------------------------------------------
 INSERT INTO `admins` (`name`, `email`, `password`, `role`) VALUES
-('Admin', 'admin@forkncork.com', '$2b$10$8K1p/a0dL1LXMc0Ybq5Y7OQF1Q3tQPqxHWh8v7ufYOkN7YPqxDYzS', 'super_admin');
+('Admin', 'admin@forkncork.com', '$2b$10$AATUtPEOYQDCvjCsOq0ysO1ynVyjIjECLSvh4/pjQTBUUGNaz525G', 'super_admin');
 
 -- ------------------------------------------------------------
 -- Categories
@@ -248,40 +248,40 @@ INSERT INTO `categories` (`id`, `name`, `slug`, `description`, `image_url`, `is_
 
 -- Burgers
 INSERT INTO `products` (`id`, `category_id`, `name`, `slug`, `description`, `price`, `image_url`, `is_available`, `is_featured`) VALUES
-(1,  1, 'Classic Burger',    'classic-burger',    'Our signature beef patty with lettuce, tomato, onion, and our house sauce on a toasted brioche bun.',                  4.50, '/images/products/classic-burger.jpg',    1, 1),
-(2,  1, 'Cheese Burger',     'cheese-burger',     'A juicy beef patty topped with melted cheddar cheese, pickles, lettuce, and ketchup.',                                 5.00, '/images/products/cheese-burger.jpg',     1, 1),
-(3,  1, 'BBQ Bacon Burger',  'bbq-bacon-burger',  'Smoky BBQ sauce, crispy bacon strips, cheddar cheese, and caramelised onions on a flame-grilled patty.',               6.50, '/images/products/bbq-bacon-burger.jpg',  1, 0),
-(4,  1, 'Double Burger',     'double-burger',     'Two flame-grilled beef patties stacked high with double cheese, lettuce, tomato, and our special sauce.',              7.00, '/images/products/double-burger.jpg',     1, 0),
+(1,  1, 'Classic Burger',    'classic-burger',    'Our signature beef patty with lettuce, tomato, onion, and our house sauce on a toasted brioche bun.',                  4.50, '/images/menu/classic-burger.jpg',    1, 1),
+(2,  1, 'Cheese Burger',     'cheese-burger',     'A juicy beef patty topped with melted cheddar cheese, pickles, lettuce, and ketchup.',                                 5.00, '/images/menu/cheese-burger.jpg',     1, 1),
+(3,  1, 'BBQ Bacon Burger',  'bbq-bacon-burger',  'Smoky BBQ sauce, crispy bacon strips, cheddar cheese, and caramelised onions on a flame-grilled patty.',               6.50, '/images/menu/bbq-bacon-burger.jpg',  1, 0),
+(4,  1, 'Double Burger',     'double-burger',     'Two flame-grilled beef patties stacked high with double cheese, lettuce, tomato, and our special sauce.',              7.00, '/images/menu/double-burger.jpg',     1, 0),
 
 -- Pizzas
-(5,  2, 'Margherita',        'margherita',        'Classic Italian pizza with San Marzano tomato sauce, fresh mozzarella, and basil leaves.',                             6.00, '/images/products/margherita.jpg',        1, 1),
-(6,  2, 'Pepperoni',         'pepperoni',         'Generous layers of spicy pepperoni slices over mozzarella and our signature tomato sauce.',                            7.00, '/images/products/pepperoni.jpg',         1, 1),
-(7,  2, 'BBQ Chicken Pizza', 'bbq-chicken-pizza', 'Grilled chicken, red onion, and green peppers on a smoky BBQ sauce base with mozzarella.',                            7.50, '/images/products/bbq-chicken-pizza.jpg', 1, 0),
-(8,  2, 'Veggie Pizza',      'veggie-pizza',      'A colourful medley of bell peppers, mushrooms, olives, onions, and sweetcorn on a tomato base.',                      6.50, '/images/products/veggie-pizza.jpg',      1, 0),
+(5,  2, 'Margherita',        'margherita',        'Classic Italian pizza with San Marzano tomato sauce, fresh mozzarella, and basil leaves.',                             6.00, '/images/menu/margherita.jpg',        1, 1),
+(6,  2, 'Pepperoni',         'pepperoni',         'Generous layers of spicy pepperoni slices over mozzarella and our signature tomato sauce.',                            7.00, '/images/menu/pepperoni.jpg',         1, 1),
+(7,  2, 'BBQ Chicken Pizza', 'bbq-chicken-pizza', 'Grilled chicken, red onion, and green peppers on a smoky BBQ sauce base with mozzarella.',                            7.50, '/images/menu/bbq-chicken-pizza.jpg', 1, 0),
+(8,  2, 'Veggie Pizza',      'veggie-pizza',      'A colourful medley of bell peppers, mushrooms, olives, onions, and sweetcorn on a tomato base.',                      6.50, '/images/menu/veggie-pizza.jpg',      1, 0),
 
 -- Sandwiches
-(9,  3, 'Club Sandwich',     'club-sandwich',     'Triple-decker sandwich with grilled chicken, bacon, lettuce, tomato, and mayo on toasted bread.',                     4.00, '/images/products/club-sandwich.jpg',     1, 0),
-(10, 3, 'Chicken Wrap',      'chicken-wrap',      'Warm tortilla wrap filled with seasoned grilled chicken, mixed greens, and garlic yoghurt dressing.',                 4.50, '/images/products/chicken-wrap.jpg',      1, 1),
-(11, 3, 'Philly Steak',      'philly-steak',      'Thinly sliced steak with melted provolone, sauteed peppers, and onions in a toasted hoagie roll.',                   5.50, '/images/products/philly-steak.jpg',      1, 0),
-(12, 3, 'BLT',               'blt',               'Crispy bacon, fresh lettuce, and ripe tomato slices with mayo on toasted sourdough.',                                 3.50, '/images/products/blt.jpg',               1, 0),
+(9,  3, 'Club Sandwich',     'club-sandwich',     'Triple-decker sandwich with grilled chicken, bacon, lettuce, tomato, and mayo on toasted bread.',                     4.00, '/images/menu/club-sandwich.jpg',     1, 0),
+(10, 3, 'Chicken Wrap',      'chicken-wrap',      'Warm tortilla wrap filled with seasoned grilled chicken, mixed greens, and garlic yoghurt dressing.',                 4.50, '/images/menu/chicken-wrap.jpg',      1, 1),
+(11, 3, 'Philly Steak',      'philly-steak',      'Thinly sliced steak with melted provolone, sauteed peppers, and onions in a toasted hoagie roll.',                   5.50, '/images/menu/philly-steak.jpg',      1, 0),
+(12, 3, 'BLT',               'blt',               'Crispy bacon, fresh lettuce, and ripe tomato slices with mayo on toasted sourdough.',                                 3.50, '/images/menu/blt.jpg',               1, 0),
 
 -- Drinks
-(13, 4, 'Coca Cola',         'coca-cola',         'Ice-cold Coca Cola served in a 330 ml can.',                                                                          1.50, '/images/products/coca-cola.jpg',         1, 0),
-(14, 4, 'Fresh Lemonade',    'fresh-lemonade',    'Freshly squeezed lemonade with a hint of mint, served over ice.',                                                     2.00, '/images/products/fresh-lemonade.jpg',    1, 0),
-(15, 4, 'Milkshake',         'milkshake',         'Thick and creamy milkshake available in chocolate, vanilla, or strawberry.',                                           3.00, '/images/products/milkshake.jpg',         1, 1),
-(16, 4, 'Iced Coffee',       'iced-coffee',       'Chilled espresso blended with milk and ice for a smooth, refreshing pick-me-up.',                                    2.50, '/images/products/iced-coffee.jpg',       1, 0),
+(13, 4, 'Coca Cola',         'coca-cola',         'Ice-cold Coca Cola served in a 330 ml can.',                                                                          1.50, '/images/menu/coca-cola.jpg',         1, 0),
+(14, 4, 'Fresh Lemonade',    'fresh-lemonade',    'Freshly squeezed lemonade with a hint of mint, served over ice.',                                                     2.00, '/images/menu/fresh-lemonade.jpg',    1, 0),
+(15, 4, 'Milkshake',         'milkshake',         'Thick and creamy milkshake available in chocolate, vanilla, or strawberry.',                                           3.00, '/images/menu/milkshake.jpg',         1, 1),
+(16, 4, 'Iced Coffee',       'iced-coffee',       'Chilled espresso blended with milk and ice for a smooth, refreshing pick-me-up.',                                    2.50, '/images/menu/iced-coffee.jpg',       1, 0),
 
 -- Desserts
-(17, 5, 'Chocolate Brownie',  'chocolate-brownie',  'Rich, fudgy chocolate brownie served warm with a dusting of powdered sugar.',                                       3.00, '/images/products/chocolate-brownie.jpg',  1, 0),
-(18, 5, 'Ice Cream Sundae',   'ice-cream-sundae',   'Three scoops of ice cream drizzled with chocolate sauce, whipped cream, and a cherry on top.',                      3.50, '/images/products/ice-cream-sundae.jpg',   1, 1),
-(19, 5, 'Apple Pie',          'apple-pie',          'Warm apple pie with a flaky golden crust, lightly spiced with cinnamon and served with cream.',                      2.50, '/images/products/apple-pie.jpg',          1, 0),
-(20, 5, 'Cheesecake',         'cheesecake',         'New York-style creamy cheesecake on a buttery biscuit base with a berry compote drizzle.',                           4.00, '/images/products/cheesecake.jpg',         1, 0),
+(17, 5, 'Chocolate Brownie',  'chocolate-brownie',  'Rich, fudgy chocolate brownie served warm with a dusting of powdered sugar.',                                       3.00, '/images/menu/chocolate-brownie.jpg',  1, 0),
+(18, 5, 'Ice Cream Sundae',   'ice-cream-sundae',   'Three scoops of ice cream drizzled with chocolate sauce, whipped cream, and a cherry on top.',                      3.50, '/images/menu/ice-cream-sundae.jpg',   1, 1),
+(19, 5, 'Apple Pie',          'apple-pie',          'Warm apple pie with a flaky golden crust, lightly spiced with cinnamon and served with cream.',                      2.50, '/images/menu/apple-pie.jpg',          1, 0),
+(20, 5, 'Cheesecake',         'cheesecake',         'New York-style creamy cheesecake on a buttery biscuit base with a berry compote drizzle.',                           4.00, '/images/menu/cheesecake.jpg',         1, 0),
 
 -- Sides
-(21, 6, 'French Fries',       'french-fries',       'Golden, crispy French fries seasoned with sea salt. The perfect side for any meal.',                                 2.00, '/images/products/french-fries.jpg',       1, 1),
-(22, 6, 'Onion Rings',        'onion-rings',        'Beer-battered onion rings fried until golden and served with a tangy dipping sauce.',                                2.50, '/images/products/onion-rings.jpg',        1, 0),
-(23, 6, 'Chicken Wings',      'chicken-wings',      'Crispy chicken wings tossed in your choice of buffalo, BBQ, or honey garlic sauce.',                                 4.00, '/images/products/chicken-wings.jpg',      1, 0),
-(24, 6, 'Mozzarella Sticks',  'mozzarella-sticks',  'Breaded mozzarella sticks fried to a golden crisp, served with marinara dipping sauce.',                             3.50, '/images/products/mozzarella-sticks.jpg',  1, 0);
+(21, 6, 'French Fries',       'french-fries',       'Golden, crispy French fries seasoned with sea salt. The perfect side for any meal.',                                 2.00, '/images/menu/french-fries.jpg',       1, 1),
+(22, 6, 'Onion Rings',        'onion-rings',        'Beer-battered onion rings fried until golden and served with a tangy dipping sauce.',                                2.50, '/images/menu/onion-rings.jpg',        1, 0),
+(23, 6, 'Chicken Wings',      'chicken-wings',      'Crispy chicken wings tossed in your choice of buffalo, BBQ, or honey garlic sauce.',                                 4.00, '/images/menu/chicken-wings.jpg',      1, 0),
+(24, 6, 'Mozzarella Sticks',  'mozzarella-sticks',  'Breaded mozzarella sticks fried to a golden crisp, served with marinara dipping sauce.',                             3.50, '/images/menu/mozzarella-sticks.jpg',  1, 0);
 
 -- ------------------------------------------------------------
 -- Restaurant Settings

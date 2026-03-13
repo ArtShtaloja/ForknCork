@@ -3,414 +3,411 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Fork n Cork - Handcrafted Burgers, Fresh Pizzas & Bold Flavors</title>
-  <meta name="description" content="Fork n Cork serves handcrafted burgers, fresh pizzas and bold flavors in the heart of Gjakovë. Order for dine-in, takeaway, or delivery.">
-
-  <!-- Google Fonts -->
+  <title>Fork n Cork - Premium Burgers & Bold Flavors</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
-
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
-  <!-- App Styles -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@500;600&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
 
-  <!-- ========================================================================
-       HEADER
-       ======================================================================== -->
-  <header class="header" id="header">
-    <div class="container header-inner">
-      <a href="/" class="logo">Fork <em>n</em> Cork</a>
-
-      <nav class="nav" id="nav">
-        <ul class="nav-list">
-          <li><a href="/" class="nav-link active">Home</a></li>
-          <li><a href="/menu" class="nav-link">Menu</a></li>
-          <li><a href="/contact" class="nav-link">Contact</a></li>
-        </ul>
-      </nav>
-
-      <div class="header-actions">
-        <button class="cart-toggle" id="cart-toggle" aria-label="Open cart">
-          <i class="fas fa-shopping-bag"></i>
-          <span class="cart-badge" id="cart-badge">0</span>
-        </button>
-        <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle menu">
-          <i class="fas fa-bars"></i>
-        </button>
+<!-- Header -->
+<header class="header" id="header">
+  <div class="header-inner">
+    <a href="/" class="logo">Fork <span>n</span> Cork</a>
+    <nav class="nav" id="nav">
+      <a href="/" class="nav-link active" data-i18n="nav.home">Home</a>
+      <a href="/menu" class="nav-link" data-i18n="nav.menu">Menu</a>
+      <a href="#about" class="nav-link" data-i18n="nav.about">About</a>
+      <a href="#gallery" class="nav-link" data-i18n="nav.gallery">Gallery</a>
+      <a href="/contact" class="nav-link" data-i18n="nav.contact">Contact</a>
+    </nav>
+    <div class="header-actions">
+      <div class="lang-toggle">
+        <button class="lang-btn active" data-lang="en">EN</button>
+        <button class="lang-btn" data-lang="al">SQ</button>
       </div>
-    </div>
-  </header>
-
-  <!-- ========================================================================
-       HERO
-       ======================================================================== -->
-  <section class="hero" id="hero" style="background-image: url('/images/forkncork8.jpg')">
-    <div class="hero-overlay"></div>
-    <div class="container hero-content">
-      <span class="hero-tagline">WELCOME TO</span>
-      <h1 class="hero-title">Fork <em>n</em> Cork</h1>
-      <p class="hero-subtitle">
-        Handcrafted burgers, fresh pizzas &amp; bold flavors in the heart of Gjakov&euml;
-      </p>
-      <div class="hero-cta">
-        <a href="/menu" class="btn btn-primary btn-lg">Order Now</a>
-        <a href="/menu" class="btn btn-outline btn-lg">View Menu</a>
-      </div>
-    </div>
-    <div class="scroll-indicator" aria-hidden="true">
-      <i class="fas fa-chevron-down"></i>
-    </div>
-  </section>
-
-  <!-- ========================================================================
-       FEATURED MENU
-       ======================================================================== -->
-  <section class="section featured" id="featured">
-    <div class="container">
-      <div class="section-header">
-        <span class="section-label">OUR MENU</span>
-        <h2 class="section-title">Popular Dishes</h2>
-        <p class="section-subtitle">Our most loved items, freshly prepared for you</p>
-      </div>
-      <div class="product-grid" id="featured-products">
-        <!-- Populated dynamically by JS -->
-      </div>
-      <div class="section-footer">
-        <a href="/menu" class="btn btn-outline">See Full Menu <i class="fas fa-arrow-right"></i></a>
-      </div>
-    </div>
-  </section>
-
-  <!-- ========================================================================
-       ABOUT
-       ======================================================================== -->
-  <section class="section about" id="about">
-    <div class="container about-grid">
-      <div class="about-image">
-        <img src="/images/forkncork5.jpg" alt="Inside Fork n Cork restaurant" loading="lazy">
-      </div>
-      <div class="about-content">
-        <span class="section-label">WHO WE ARE</span>
-        <h2 class="section-title">Our Story</h2>
-        <p>
-          Born from a love of great food and good company, Fork n Cork has been serving bold
-          flavors since day one. Located in the heart of Gjakov&euml;, we believe every meal
-          should be an experience &mdash; from the first bite to the last.
-        </p>
-        <p>
-          Our kitchen uses only the freshest locally-sourced ingredients, and every dish is
-          prepared to order. Whether you're grabbing a quick lunch, treating the family, or
-          ordering for delivery &mdash; we've got you covered.
-        </p>
-        <ul class="about-features">
-          <li>
-            <span class="feature-icon"><i class="fas fa-leaf"></i></span>
-            <span>Fresh Ingredients</span>
-          </li>
-          <li>
-            <span class="feature-icon"><i class="fas fa-fire-burner"></i></span>
-            <span>Made to Order</span>
-          </li>
-          <li>
-            <span class="feature-icon"><i class="fas fa-utensils"></i></span>
-            <span>Dine-in &amp; Drive-through</span>
-          </li>
-        </ul>
-        <a href="/contact" class="btn btn-primary">Learn More</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- ========================================================================
-       GALLERY
-       ======================================================================== -->
-  <section class="section gallery" id="gallery">
-    <div class="container">
-      <div class="section-header">
-        <span class="section-label">GALLERY</span>
-        <h2 class="section-title">From Our Kitchen</h2>
-        <p class="section-subtitle">Real food, real flavors</p>
-      </div>
-      <div class="gallery-grid">
-        <div class="gallery-item gallery-item--large">
-          <img src="/images/forkncork9.jpg" alt="Fork n Cork kitchen" loading="lazy">
-          <div class="gallery-item-overlay"></div>
-        </div>
-        <div class="gallery-item">
-          <img src="/images/forkncork7.jpg" alt="Fork n Cork food" loading="lazy">
-          <div class="gallery-item-overlay"></div>
-        </div>
-        <div class="gallery-item">
-          <img src="/images/forkncork3.jpg" alt="Fork n Cork dish" loading="lazy">
-          <div class="gallery-item-overlay"></div>
-        </div>
-        <div class="gallery-item">
-          <img src="/images/forkncork1.jpg" alt="Fork n Cork meal" loading="lazy">
-          <div class="gallery-item-overlay"></div>
-        </div>
-        <div class="gallery-item">
-          <img src="/images/forkncork4.jpg" alt="Fork n Cork plate" loading="lazy">
-          <div class="gallery-item-overlay"></div>
-        </div>
-        <div class="gallery-item">
-          <img src="/images/forkncork6.jpg" alt="Fork n Cork specialty" loading="lazy">
-          <div class="gallery-item-overlay"></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ========================================================================
-       PROMO / SPECIAL OFFERS
-       ======================================================================== -->
-  <section class="section promo" id="promo" style="background-image: url('/images/forkncork10.jpg')">
-    <div class="promo-overlay"></div>
-    <div class="container promo-content">
-      <h2 class="promo-title">Hungry? We've Got You Covered</h2>
-      <p class="promo-subtitle">
-        Fresh burgers, crispy fries, and ice-cold drinks. Order now for dine-in, takeaway, or delivery.
-      </p>
-      <a href="/menu" class="btn btn-primary btn-lg">Order Now</a>
-    </div>
-  </section>
-
-  <!-- ========================================================================
-       OPENING HOURS
-       ======================================================================== -->
-  <section class="section hours" id="hours">
-    <div class="container">
-      <div class="section-header">
-        <span class="section-label">HOURS</span>
-        <h2 class="section-title">We're Open</h2>
-        <p class="section-subtitle">Seven days a week</p>
-      </div>
-      <div class="hours-card">
-        <div class="hours-card-inner">
-          <div class="hours-icon">
-            <i class="fas fa-clock"></i>
-          </div>
-          <div class="hours-schedule">
-            <span class="hours-day">Monday &ndash; Sunday</span>
-            <span class="hours-time">08:00 &ndash; 24:00</span>
-          </div>
-          <div class="hours-features">
-            <span class="hours-feature">
-              <i class="fas fa-utensils"></i> Dine-in
-            </span>
-            <span class="hours-feature">
-              <i class="fas fa-car"></i> Drive-through
-            </span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ========================================================================
-       CONTACT PREVIEW
-       ======================================================================== -->
-  <section class="section contact-preview" id="contact-preview">
-    <div class="container">
-      <div class="section-header">
-        <span class="section-label">GET IN TOUCH</span>
-        <h2 class="section-title">Contact Us</h2>
-      </div>
-      <div class="contact-preview-grid">
-        <div class="contact-card">
-          <div class="contact-card-icon">
-            <i class="fas fa-map-marker-alt"></i>
-          </div>
-          <h3>Visit Us</h3>
-          <p>Yll Morina pn<br>Gjakov&euml; 50000</p>
-        </div>
-        <div class="contact-card">
-          <div class="contact-card-icon">
-            <i class="fas fa-phone-alt"></i>
-          </div>
-          <h3>Call Us</h3>
-          <p>+383 44 168 776<br>+383 45 660 127</p>
-        </div>
-        <div class="contact-card">
-          <div class="contact-card-icon">
-            <i class="fas fa-envelope"></i>
-          </div>
-          <h3>Email Us</h3>
-          <p>info@forkncork.com</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ========================================================================
-       FOOTER
-       ======================================================================== -->
-  <footer class="footer">
-    <div class="container footer-grid">
-      <div class="footer-col">
-        <a href="/" class="footer-logo">Fork <em>n</em> Cork</a>
-        <p>
-          Great food, great vibes. Handcrafted meals made with the freshest ingredients in town.
-          Come hungry, leave happy.
-        </p>
-        <div class="footer-socials">
-          <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-          <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-          <a href="#" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
-        </div>
-      </div>
-
-      <div class="footer-col">
-        <h4 class="footer-title">Quick Links</h4>
-        <ul class="footer-links">
-          <li><a href="/">Home</a></li>
-          <li><a href="/menu">Menu</a></li>
-          <li><a href="/contact">Contact</a></li>
-          <li><a href="/admin">Admin</a></li>
-        </ul>
-      </div>
-
-      <div class="footer-col">
-        <h4 class="footer-title">Contact Info</h4>
-        <ul class="footer-contact">
-          <li><i class="fas fa-map-marker-alt"></i> Yll Morina pn, Gjakov&euml; 50000</li>
-          <li><i class="fas fa-phone-alt"></i> +383 44 168 776</li>
-          <li><i class="fas fa-phone-alt"></i> +383 45 660 127</li>
-          <li><i class="fas fa-envelope"></i> info@forkncork.com</li>
-        </ul>
-      </div>
-
-      <div class="footer-col">
-        <h4 class="footer-title">Opening Hours</h4>
-        <ul class="footer-hours">
-          <li>
-            <span>Mon &ndash; Sun</span>
-            <span>08:00 &ndash; 24:00</span>
-          </li>
-        </ul>
-        <p class="footer-hours-note">Dine-in &amp; Drive-through available</p>
-      </div>
-    </div>
-
-    <div class="footer-bar">
-      <div class="container">
-        <p>&copy; 2026 Fork n Cork. All rights reserved.</p>
-      </div>
-    </div>
-  </footer>
-
-  <!-- ========================================================================
-       CART SIDEBAR
-       ======================================================================== -->
-  <div class="cart-overlay" id="cart-overlay"></div>
-  <aside class="cart-sidebar" id="cart-sidebar">
-    <div class="cart-header">
-      <h3>Your Cart</h3>
-      <button class="cart-close" id="cart-close" aria-label="Close cart">
-        <i class="fas fa-times"></i>
+      <button class="btn-icon cart-btn" id="cart-toggle" aria-label="Cart">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+        <span class="cart-badge" id="cart-badge">0</span>
+      </button>
+      <button class="mobile-toggle" id="mobile-toggle" aria-label="Menu">
+        <span></span><span></span><span></span>
       </button>
     </div>
+  </div>
+</header>
+<div class="nav-overlay" id="nav-overlay"></div>
 
-    <div class="cart-body" id="cart-items">
-      <p class="cart-empty">Your cart is empty.</p>
+<!-- Hero Section -->
+<section class="hero" id="hero">
+  <div class="hero-bg">
+    <img src="/images/forkncork8.jpg" alt="Fork n Cork restaurant" loading="eager">
+  </div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-tag">FORK N CORK</div>
+    <h1 class="hero-title" data-i18n="hero.tagline">Crafted with Passion, Served with Pride</h1>
+    <p class="hero-subtitle" data-i18n="hero.subtitle">Premium burgers, fresh ingredients, unforgettable taste</p>
+    <div class="hero-actions">
+      <a href="/menu" class="btn btn-primary btn-lg" data-i18n="hero.orderNow">Order Now</a>
+      <a href="/menu" class="btn btn-outline btn-lg" data-i18n="hero.viewMenu">View Menu</a>
     </div>
+  </div>
+  <div class="hero-scroll">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+  </div>
+</section>
 
-    <div class="cart-footer">
-      <div class="cart-total">
-        <span>Total:</span>
-        <span id="cart-total">$0.00</span>
-      </div>
-      <button class="btn btn-primary btn-block" id="checkout-btn" disabled>
-        Proceed to Checkout
-      </button>
+<!-- Featured Menu -->
+<section class="section section-dark" id="featured">
+  <div class="container fade-up">
+    <div class="section-header center">
+      <span class="section-label" data-i18n="featured.title">Fan Favorites</span>
+      <h2 class="section-title" data-i18n="featured.title">Fan Favorites</h2>
+      <p class="section-subtitle" data-i18n="featured.subtitle">Our most loved dishes, handpicked for you</p>
     </div>
-  </aside>
+    <div class="products-grid" id="featured-products">
+      <!-- Populated dynamically by home.js -->
+    </div>
+    <div class="text-center mt-3">
+      <a href="/menu" class="btn btn-outline" data-i18n="featured.viewAll">View Full Menu</a>
+    </div>
+  </div>
+</section>
 
-  <!-- ========================================================================
-       CHECKOUT MODAL
-       ======================================================================== -->
-  <div class="modal-overlay" id="checkout-overlay">
-    <div class="modal" id="checkout-modal">
-      <div class="modal-header">
-        <h3>Checkout</h3>
-        <button class="modal-close" id="checkout-close" aria-label="Close checkout">
-          <i class="fas fa-times"></i>
-        </button>
+<!-- About -->
+<section class="section section-darker" id="about">
+  <div class="container">
+    <div class="about-grid fade-up">
+      <div class="about-img-wrap">
+        <img src="/images/forkncork5.jpg" alt="Fork n Cork interior" loading="lazy">
+        <div class="about-img-accent"></div>
       </div>
-
-      <div class="modal-body">
-        <form id="checkout-form" novalidate>
-          <div class="form-row">
-            <div class="form-group">
-              <label for="checkout-name">Full Name <span class="required">*</span></label>
-              <input type="text" id="checkout-name" name="customer_name" required placeholder="John Doe">
+      <div class="about-text">
+        <span class="section-label" data-i18n="about.title">Our Story</span>
+        <h2 class="section-title" data-i18n="about.subtitle">Where Every Bite Tells a Story</h2>
+        <p data-i18n="about.text1">At Fork n Cork, we believe great food brings people together. Our kitchen combines bold flavors with the freshest ingredients to create dishes that keep you coming back.</p>
+        <p data-i18n="about.text2">From our signature smash burgers to our hand-cut fries, every item on our menu is crafted with care and served with pride.</p>
+        <p data-i18n="about.text3">Whether you're dining in, grabbing takeout, or ordering delivery — the Fork n Cork experience is always premium.</p>
+        <div class="about-features">
+          <div class="about-feature">
+            <div class="about-feature-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
             </div>
-            <div class="form-group">
-              <label for="checkout-email">Email <span class="required">*</span></label>
-              <input type="email" id="checkout-email" name="customer_email" required placeholder="john@example.com">
+            <h4 data-i18n="about.freshIngredients">Fresh Ingredients</h4>
+            <p data-i18n="about.freshIngredientsDesc">Locally sourced, always fresh</p>
+          </div>
+          <div class="about-feature">
+            <div class="about-feature-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a3 3 0 00-3 3v7a3 3 0 006 0V5a3 3 0 00-3-3z"/><path d="M19 10v2a7 7 0 01-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/></svg>
             </div>
+            <h4 data-i18n="about.handcrafted">Handcrafted</h4>
+            <p data-i18n="about.handcraftedDesc">Made to order, every time</p>
           </div>
-
-          <div class="form-row">
-            <div class="form-group">
-              <label for="checkout-phone">Phone <span class="required">*</span></label>
-              <input type="tel" id="checkout-phone" name="customer_phone" required placeholder="+383 44 000 000">
+          <div class="about-feature">
+            <div class="about-feature-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
             </div>
-            <div class="form-group">
-              <label for="checkout-order-type">Order Type <span class="required">*</span></label>
-              <select id="checkout-order-type" name="order_type" required>
-                <option value="">Select type</option>
-                <option value="dine-in">Dine-In</option>
-                <option value="takeaway">Takeaway</option>
-                <option value="delivery">Delivery</option>
-              </select>
-            </div>
+            <h4 data-i18n="about.fastDelivery">Fast Delivery</h4>
+            <p data-i18n="about.fastDeliveryDesc">Hot food at your door</p>
           </div>
-
-          <div class="form-group" id="checkout-address-group">
-            <label for="checkout-address">Delivery Address</label>
-            <input type="text" id="checkout-address" name="address" placeholder="123 Main St, Gjakovë">
-          </div>
-
-          <div class="form-group">
-            <label for="checkout-notes">Order Notes</label>
-            <textarea id="checkout-notes" name="notes" rows="3" placeholder="Any special instructions..."></textarea>
-          </div>
-
-          <div class="order-summary" id="checkout-summary">
-            <!-- Populated by JS -->
-          </div>
-
-          <div class="checkout-total">
-            <span>Order Total:</span>
-            <strong id="checkout-total">$0.00</strong>
-          </div>
-
-          <button type="submit" class="btn btn-primary btn-block">
-            <i class="fas fa-check"></i> Place Order
-          </button>
-        </form>
+        </div>
       </div>
     </div>
   </div>
+</section>
 
-  <!-- ========================================================================
-       SCRIPTS
-       ======================================================================== -->
-  <script src="/js/app.js"></script>
-  <script src="/js/checkout.js"></script>
-  <script src="/js/home.js"></script>
+<!-- Gallery -->
+<section class="section section-dark" id="gallery">
+  <div class="container fade-up">
+    <div class="section-header center">
+      <span class="section-label" data-i18n="gallery.title">The Vibe</span>
+      <h2 class="section-title" data-i18n="gallery.title">The Vibe</h2>
+      <p class="section-subtitle" data-i18n="gallery.subtitle">Step inside Fork n Cork</p>
+    </div>
+    <div class="gallery-grid">
+      <div class="gallery-item"><img src="/images/forkncork9.jpg" alt="Gallery" loading="lazy"></div>
+      <div class="gallery-item"><img src="/images/forkncork7.jpg" alt="Gallery" loading="lazy"></div>
+      <div class="gallery-item"><img src="/images/forkncork3.jpg" alt="Gallery" loading="lazy"></div>
+      <div class="gallery-item"><img src="/images/forkncork1.jpg" alt="Gallery" loading="lazy"></div>
+      <div class="gallery-item"><img src="/images/forkncork4.jpg" alt="Gallery" loading="lazy"></div>
+      <div class="gallery-item"><img src="/images/forkncork6.jpg" alt="Gallery" loading="lazy"></div>
+    </div>
+  </div>
+</section>
 
-  <script>
-    window.addEventListener('scroll', () => {
-      const header = document.getElementById('header');
-      if (header) header.classList.toggle('scrolled', window.scrollY > 50);
+<!-- Special Offers -->
+<section class="section section-darker" id="specials">
+  <div class="container fade-up">
+    <div class="section-header center">
+      <span class="section-label" data-i18n="specials.title">Special Offers</span>
+      <h2 class="section-title" data-i18n="specials.title">Special Offers</h2>
+      <p class="section-subtitle" data-i18n="specials.subtitle">Don't miss out on these deals</p>
+    </div>
+    <div class="specials-grid">
+      <div class="special-card">
+        <span class="special-badge" data-i18n="specials.deal1Badge">Save 20%</span>
+        <h3 data-i18n="specials.deal1Title">Combo Deal</h3>
+        <p data-i18n="specials.deal1Desc">Burger + Fries + Drink</p>
+        <a href="/menu" class="btn btn-primary btn-sm" data-i18n="specials.orderNow">Order Now</a>
+      </div>
+      <div class="special-card">
+        <span class="special-badge" data-i18n="specials.deal2Badge">Best Value</span>
+        <h3 data-i18n="specials.deal2Title">Family Pack</h3>
+        <p data-i18n="specials.deal2Desc">4 Burgers + 2 Large Fries + 4 Drinks</p>
+        <a href="/menu" class="btn btn-primary btn-sm" data-i18n="specials.orderNow">Order Now</a>
+      </div>
+      <div class="special-card">
+        <span class="special-badge" data-i18n="specials.deal3Badge">Limited Time</span>
+        <h3 data-i18n="specials.deal3Title">Happy Hour</h3>
+        <p data-i18n="specials.deal3Desc">50% off all drinks, Mon-Fri 3-5PM</p>
+        <a href="/menu" class="btn btn-primary btn-sm" data-i18n="specials.orderNow">Order Now</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Opening Hours -->
+<section class="section section-dark" id="hours">
+  <div class="container fade-up">
+    <div class="section-header center">
+      <span class="section-label" data-i18n="hours.title">Opening Hours</span>
+      <h2 class="section-title" data-i18n="hours.title">Opening Hours</h2>
+      <p class="section-subtitle" data-i18n="hours.subtitle">Come visit us</p>
+    </div>
+    <div class="hours-card">
+      <div class="hours-row">
+        <span class="hours-day" data-i18n="hours.monday">Monday</span>
+        <span class="hours-time">08:00 - 24:00</span>
+      </div>
+      <div class="hours-row">
+        <span class="hours-day" data-i18n="hours.tuesday">Tuesday</span>
+        <span class="hours-time">08:00 - 24:00</span>
+      </div>
+      <div class="hours-row">
+        <span class="hours-day" data-i18n="hours.wednesday">Wednesday</span>
+        <span class="hours-time">08:00 - 24:00</span>
+      </div>
+      <div class="hours-row">
+        <span class="hours-day" data-i18n="hours.thursday">Thursday</span>
+        <span class="hours-time">08:00 - 24:00</span>
+      </div>
+      <div class="hours-row">
+        <span class="hours-day" data-i18n="hours.friday">Friday</span>
+        <span class="hours-time">08:00 - 24:00</span>
+      </div>
+      <div class="hours-row">
+        <span class="hours-day" data-i18n="hours.saturday">Saturday</span>
+        <span class="hours-time">08:00 - 24:00</span>
+      </div>
+      <div class="hours-row">
+        <span class="hours-day" data-i18n="hours.sunday">Sunday</span>
+        <span class="hours-time">08:00 - 24:00</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Contact Preview -->
+<section class="section section-darker" id="contact-preview">
+  <div class="container fade-up">
+    <div class="section-header center">
+      <span class="section-label" data-i18n="contactPreview.title">Get In Touch</span>
+      <h2 class="section-title" data-i18n="contactPreview.title">Get In Touch</h2>
+      <p class="section-subtitle" data-i18n="contactPreview.subtitle">We'd love to hear from you</p>
+    </div>
+    <div class="contact-cards">
+      <div class="contact-card">
+        <div class="contact-card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        </div>
+        <h3 data-i18n="contactPreview.visitUs">Visit Us</h3>
+        <p>Yll Morina pn, Gjakove 50000</p>
+      </div>
+      <div class="contact-card">
+        <div class="contact-card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+        </div>
+        <h3 data-i18n="contactPreview.callUs">Call Us</h3>
+        <p>+383 44 168 776</p>
+      </div>
+      <div class="contact-card">
+        <div class="contact-card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        </div>
+        <h3 data-i18n="contactPreview.emailUs">Email Us</h3>
+        <p>info@forkncork.com</p>
+      </div>
+    </div>
+    <div class="text-center">
+      <a href="/contact" class="btn btn-primary" data-i18n="contactPreview.viewContact">Contact Page</a>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="/" class="logo">Fork <span>n</span> Cork</a>
+        <p data-i18n="footer.description">Premium fast food crafted with passion. Fresh ingredients, bold flavors, unforgettable experience.</p>
+        <div class="footer-socials">
+          <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg></a>
+          <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+          <a href="#" aria-label="TikTok"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1v-3.5a6.37 6.37 0 00-.79-.05A6.34 6.34 0 003.15 15.2a6.34 6.34 0 0010.86 4.44v-7.41a8.16 8.16 0 005.58 2.18v-3.45a4.85 4.85 0 01-3.77-1.82V6.69z"/></svg></a>
+        </div>
+      </div>
+      <div>
+        <h4 data-i18n="footer.quickLinks">Quick Links</h4>
+        <ul class="footer-links">
+          <li><a href="/" data-i18n="nav.home">Home</a></li>
+          <li><a href="/menu" data-i18n="nav.menu">Menu</a></li>
+          <li><a href="/contact" data-i18n="nav.contact">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 data-i18n="footer.openingHours">Opening Hours</h4>
+        <ul class="footer-hours">
+          <li><span>Mon - Fri</span><span>08:00 - 24:00</span></li>
+          <li><span>Saturday</span><span>08:00 - 24:00</span></li>
+          <li><span>Sunday</span><span>08:00 - 24:00</span></li>
+        </ul>
+      </div>
+      <div>
+        <h4 data-i18n="footer.followUs">Follow Us</h4>
+        <p style="color:var(--text-dim);font-size:.9rem">Yll Morina pn<br>Gjakove 50000<br>+383 44 168 776<br>info@forkncork.com</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 Fork n Cork. <span data-i18n="footer.rights">All rights reserved.</span></p>
+    </div>
+  </div>
+</footer>
+
+<!-- Cart Sidebar -->
+<div class="cart-overlay" id="cart-overlay"></div>
+<aside class="cart-sidebar" id="cart-sidebar">
+  <div class="cart-header">
+    <h2 data-i18n="cart.title">Your Cart</h2>
+    <button class="modal-close" id="cart-close" aria-label="Close cart">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+  <div class="cart-items" id="cart-items">
+    <div class="cart-empty">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+      <p data-i18n="cart.empty">Your cart is empty</p>
+      <p class="cart-empty-desc" data-i18n="cart.emptyDesc">Add some delicious items from our menu!</p>
+      <a href="/menu" class="btn btn-primary btn-sm" data-i18n="cart.browseMenu">Browse Menu</a>
+    </div>
+  </div>
+  <div class="cart-footer">
+    <div class="cart-total">
+      <span data-i18n="cart.total">Total</span>
+      <span class="amount" id="cart-total">&euro;0.00</span>
+    </div>
+    <button class="btn btn-primary" id="checkout-btn" disabled data-i18n="cart.checkout">Checkout</button>
+  </div>
+</aside>
+
+<!-- Checkout Modal -->
+<div class="modal-overlay" id="checkout-overlay">
+  <div class="modal" id="checkout-modal">
+    <div class="modal-header">
+      <h2 data-i18n="checkout.title">Complete Your Order</h2>
+      <button class="modal-close" id="checkout-close" aria-label="Close">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div id="checkout-summary"></div>
+      <form id="checkout-form" novalidate>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="checkout-name" data-i18n="checkout.name">Full Name</label>
+            <input class="form-input" type="text" id="checkout-name" name="customer_name" required data-i18n-placeholder="checkout.namePlaceholder" placeholder="John Doe">
+            <p class="form-error"></p>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="checkout-email" data-i18n="checkout.email">Email</label>
+            <input class="form-input" type="email" id="checkout-email" name="customer_email" required data-i18n-placeholder="checkout.emailPlaceholder" placeholder="john@example.com">
+            <p class="form-error"></p>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="checkout-phone" data-i18n="checkout.phone">Phone</label>
+            <input class="form-input" type="tel" id="checkout-phone" name="customer_phone" required data-i18n-placeholder="checkout.phonePlaceholder" placeholder="+383 44 123 456">
+            <p class="form-error"></p>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="checkout-order-type" data-i18n="checkout.orderType">Order Type</label>
+            <select class="form-select" id="checkout-order-type" name="order_type" required>
+              <option value="">—</option>
+              <option value="dine-in" data-i18n="checkout.dineIn">Dine In</option>
+              <option value="takeaway" data-i18n="checkout.takeaway">Takeaway</option>
+              <option value="delivery" data-i18n="checkout.delivery">Delivery</option>
+            </select>
+            <p class="form-error"></p>
+          </div>
+        </div>
+        <div class="form-group" id="checkout-address-group" style="display:none">
+          <label class="form-label" for="checkout-address" data-i18n="checkout.address">Delivery Address</label>
+          <input class="form-input" type="text" id="checkout-address" name="address" data-i18n-placeholder="checkout.addressPlaceholder" placeholder="Your delivery address">
+          <p class="form-error"></p>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="checkout-notes" data-i18n="checkout.notes">Order Notes</label>
+          <textarea class="form-textarea" id="checkout-notes" name="notes" rows="3" data-i18n-placeholder="checkout.notesPlaceholder" placeholder="Any special requests..."></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary btn-lg" style="width:100%;justify-content:center" data-i18n="checkout.placeOrder">Place Order</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Mobile Sticky Order -->
+<a href="/menu" class="mobile-order-btn" data-i18n="hero.orderNow">Order Now</a>
+
+<!-- Toast Container -->
+<div class="toast-container" id="toast-container"></div>
+
+<script src="/js/i18n.js"></script>
+<script src="/js/app.js"></script>
+<script src="/js/checkout.js"></script>
+<script src="/js/product-images.js"></script>
+<script src="/js/home.js"></script>
+<script>
+  // Header scroll effect
+  window.addEventListener('scroll', () => {
+    document.getElementById('header').classList.toggle('scrolled', window.scrollY > 50);
+  });
+
+  // Mobile menu
+  const mobileToggle = document.getElementById('mobile-toggle');
+  const nav = document.getElementById('nav');
+  const navOverlay = document.getElementById('nav-overlay');
+  if (mobileToggle) {
+    mobileToggle.addEventListener('click', () => {
+      nav.classList.toggle('open');
+      navOverlay.classList.toggle('open');
     });
-  </script>
+    navOverlay.addEventListener('click', () => {
+      nav.classList.remove('open');
+      navOverlay.classList.remove('open');
+    });
+  }
 
+  // Fade-in observer
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+  // Init i18n
+  I18n.init();
+</script>
 </body>
 </html>

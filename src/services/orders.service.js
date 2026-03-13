@@ -107,10 +107,19 @@ const getStats = async () => {
   return ordersRepository.getStats();
 };
 
+/**
+ * Get extended analytics for the admin dashboard.
+ * @returns {Promise<object>}
+ */
+const getAnalytics = async () => {
+  return ordersRepository.getAnalytics();
+};
+
 module.exports = {
   getAll,
   getById,
   create,
   updateStatus,
   getStats,
+  getAnalytics,
 };

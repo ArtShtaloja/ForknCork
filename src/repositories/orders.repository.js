@@ -126,6 +126,80 @@ const getStats = async () => {
   };
 };
 
+const getAnalytics = async () => {
+  // Today's stats
+  const [todayRows] = await pool.execute(
+    `SELECT COUNT(*) AS orders_today, COALESCE(SUM(total_amount), 0) AS revenue_today
+     FROM orders WHERE DATE(created_at) = CURDATE()`
+  );
+
+  // This week's revenue
+  const [weekRows] = await pool.execute(
+    `SELECT COALESCE(SUM(total_amount), 0) AS revenue_week
+     FROM orders WHERE created_at >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)`
+  );
+
+  // This month's revenue
+  const [monthRows] = await pool.execute(
+    `SELECT COALESCE(SUM(total_amount), 0) AS revenue_month
+     FROM orders WHERE created_at >= DATE_SUB(CURDATE(), INTERVAL 30 DAY)`
+  );
+
+  // Orders per day (last 14 days)
+  const [dailyOrders] = await pool.execute(
+    `SELECT DATE(created_at) AS date, COUNT(*) AS count, COALESCE(SUM(total_amount), 0) AS revenue
+     FROM orders WHERE created_at >= DATE_SUB(CURDATE(), INTERVAL 14 DAY)
+     GROUP BY DATE(created_at) ORDER BY date ASC`
+  );
+
+  // Top selling products (last 30 days)
+  const [topProducts] = await pool.execute(
+    `SELECT oi.product_id, p.name, SUM(oi.quantity) AS total_sold, SUM(oi.subtotal) AS total_revenue
+     FROM order_items oi
+     LEFT JOIN products p ON oi.product_id = p.id
+     WHERE oi.created_at >= DATE_SUB(CURDATE(), INTERVAL 30 DAY)
+     GROUP BY oi.product_id, p.name
+     ORDER BY total_sold DESC LIMIT 10`
+  );
+
+  // Recent orders (last 10)
+  const [recentOrders] = await pool.execute(
+    `SELECT o.*, GROUP_CONCAT(oi.product_name SEPARATOR ', ') AS item_names
+     FROM orders o
+     LEFT JOIN order_items oi ON o.id = oi.order_id
+     GROUP BY o.id
+     ORDER BY o.created_at DESC LIMIT 10`
+  );
+
+  // Orders by status
+  const [statusRows] = await pool.execute(
+    'SELECT status, COUNT(*) AS count FROM orders GROUP BY status'
+  );
+
+  // Total counts
+  const [totalRows] = await pool.execute(
+    'SELECT COUNT(*) AS total_orders, COALESCE(SUM(total_amount), 0) AS total_revenue FROM orders'
+  );
+
+  const [productCount] = await pool.execute('SELECT COUNT(*) AS count FROM products');
+  const [categoryCount] = await pool.execute('SELECT COUNT(*) AS count FROM categories');
+
+  return {
+    total_orders: totalRows[0].total_orders,
+    total_revenue: totalRows[0].total_revenue,
+    total_products: productCount[0].count,
+    total_categories: categoryCount[0].count,
+    orders_today: todayRows[0].orders_today,
+    revenue_today: todayRows[0].revenue_today,
+    revenue_week: weekRows[0].revenue_week,
+    revenue_month: monthRows[0].revenue_month,
+    daily_orders: dailyOrders,
+    top_products: topProducts,
+    recent_orders: recentOrders,
+    orders_by_status: statusRows,
+  };
+};
+
 module.exports = {
   findAll,
   findById,
@@ -135,4 +209,5 @@ module.exports = {
   findItems,
   count,
   getStats,
+  getAnalytics,
 };

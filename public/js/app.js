@@ -19,48 +19,22 @@ const formatPrice = (amount) => {
 // ---------------------------------------------------------------------------
 
 const showToast = (message, type = 'success') => {
-  const existing = document.querySelectorAll('.toast-notification');
-  existing.forEach((t) => t.remove());
-
-  const colorMap = {
-    success: '#28a745',
-    error: '#dc3545',
-    warning: '#ffc107',
-    info: '#17a2b8',
-  };
+  const container = document.getElementById('toast-container');
+  if (!container) return;
 
   const toast = document.createElement('div');
-  toast.className = 'toast-notification';
-  toast.style.cssText = `
-    position: fixed; top: 20px; right: 20px; z-index: 10000;
-    padding: 14px 24px; border-radius: 8px; color: #fff;
-    background: ${colorMap[type] || colorMap.success};
-    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-    font-size: 0.95rem; max-width: 380px;
-    animation: toastSlideIn 0.3s ease forwards;
+  toast.className = `toast ${type}`;
+  toast.innerHTML = `
+    <p>${message}</p>
+    <button class="toast-close" aria-label="Close">&times;</button>
   `;
-  toast.textContent = message;
 
-  if (!document.getElementById('toast-keyframes')) {
-    const style = document.createElement('style');
-    style.id = 'toast-keyframes';
-    style.textContent = `
-      @keyframes toastSlideIn {
-        from { opacity: 0; transform: translateX(40px); }
-        to   { opacity: 1; transform: translateX(0); }
-      }
-      @keyframes toastSlideOut {
-        from { opacity: 1; transform: translateX(0); }
-        to   { opacity: 0; transform: translateX(40px); }
-      }
-    `;
-    document.head.appendChild(style);
-  }
+  container.appendChild(toast);
 
-  document.body.appendChild(toast);
+  toast.querySelector('.toast-close').addEventListener('click', () => toast.remove());
 
   setTimeout(() => {
-    toast.style.animation = 'toastSlideOut 0.3s ease forwards';
+    toast.style.animation = 'toastIn .3s var(--ease) reverse forwards';
     toast.addEventListener('animationend', () => toast.remove());
   }, 3000);
 };
@@ -148,7 +122,7 @@ const clearCart = () => {
 // ---------------------------------------------------------------------------
 
 const updateCartBadge = () => {
-  const badge = document.querySelector('.cart-badge');
+  const badge = document.getElementById('cart-badge');
   if (!badge) return;
 
   const count = getCartCount();
@@ -181,7 +155,6 @@ const toggleCartSidebar = () => {
 const renderCart = () => {
   const container = document.getElementById('cart-items');
   const totalEl = document.getElementById('cart-total');
-  const emptyMsg = document.getElementById('cart-empty');
   const checkoutBtn = document.getElementById('checkout-btn');
 
   if (!container) return;
@@ -189,40 +162,42 @@ const renderCart = () => {
   const cart = getCart();
 
   if (cart.length === 0) {
-    container.innerHTML = '';
-    if (emptyMsg) emptyMsg.style.display = 'block';
+    container.innerHTML = `
+      <div class="cart-empty">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="width:48px;height:48px;margin-bottom:1rem;opacity:.3">
+          <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/>
+        </svg>
+        <p>${typeof I18n !== 'undefined' ? I18n.t('cart.empty') : 'Your cart is empty'}</p>
+        <p class="cart-empty-desc">${typeof I18n !== 'undefined' ? I18n.t('cart.emptyDesc') : 'Add some delicious items from our menu!'}</p>
+        <a href="/menu" class="btn btn-primary btn-sm">${typeof I18n !== 'undefined' ? I18n.t('cart.browseMenu') : 'Browse Menu'}</a>
+      </div>
+    `;
     if (totalEl) totalEl.textContent = formatPrice(0);
-    if (checkoutBtn) checkoutBtn.style.display = 'none';
+    if (checkoutBtn) checkoutBtn.disabled = true;
     return;
   }
 
-  if (emptyMsg) emptyMsg.style.display = 'none';
-  if (checkoutBtn) checkoutBtn.style.display = 'block';
+  if (checkoutBtn) checkoutBtn.disabled = false;
 
   container.innerHTML = cart
     .map(
       (item) => `
     <div class="cart-item" data-id="${item.id}">
-      <div class="cart-item-image">
-        ${
-          item.image
-            ? `<img src="${item.image}" alt="${item.name}">`
-            : '<div class="cart-item-placeholder"></div>'
-        }
+      <div class="cart-item-img">
+        ${item.image ? `<img src="${item.image}" alt="${item.name}">` : ''}
       </div>
-      <div class="cart-item-details">
-        <h4 class="cart-item-name">${item.name}</h4>
-        <p class="cart-item-price">${formatPrice(item.price)}</p>
-        <div class="cart-item-quantity">
+      <div class="cart-item-info">
+        <div class="cart-item-name">${item.name}</div>
+        <div class="cart-item-price">${formatPrice(item.price * item.quantity)}</div>
+        <div class="cart-item-qty">
           <button class="qty-btn qty-decrease" data-id="${item.id}">-</button>
-          <span class="qty-value">${item.quantity}</span>
+          <span>${item.quantity}</span>
           <button class="qty-btn qty-increase" data-id="${item.id}">+</button>
         </div>
       </div>
-      <div class="cart-item-actions">
-        <span class="cart-item-subtotal">${formatPrice(item.price * item.quantity)}</span>
-        <button class="cart-item-remove" data-id="${item.id}">&times;</button>
-      </div>
+      <button class="cart-item-remove" data-id="${item.id}" aria-label="Remove">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:18px;height:18px"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
     </div>
   `
     )
@@ -256,35 +231,11 @@ const renderCart = () => {
 };
 
 // ---------------------------------------------------------------------------
-// Mobile menu toggle
-// ---------------------------------------------------------------------------
-
-const initMobileMenu = () => {
-  const toggle = document.getElementById('mobile-menu-toggle');
-  const nav = document.getElementById('nav');
-  if (!toggle || !nav) return;
-
-  toggle.addEventListener('click', () => {
-    nav.classList.toggle('open');
-    toggle.classList.toggle('active');
-  });
-
-  // Close menu when a link is clicked
-  nav.querySelectorAll('a').forEach((link) => {
-    link.addEventListener('click', () => {
-      nav.classList.remove('open');
-      toggle.classList.remove('active');
-    });
-  });
-};
-
-// ---------------------------------------------------------------------------
 // Initialise on page load
 // ---------------------------------------------------------------------------
 
 document.addEventListener('DOMContentLoaded', () => {
   updateCartBadge();
-  initMobileMenu();
 
   // Cart toggle button
   const cartToggle = document.getElementById('cart-toggle');
@@ -307,23 +258,14 @@ document.addEventListener('DOMContentLoaded', () => {
     closeBtn.addEventListener('click', toggleCartSidebar);
   }
 
-  // Clear cart button
-  const clearBtn = document.getElementById('cart-clear');
-  if (clearBtn) {
-    clearBtn.addEventListener('click', () => {
-      clearCart();
-      showToast('Cart cleared', 'info');
-    });
-  }
-
   // Checkout button in sidebar - open checkout modal
   const checkoutBtn = document.getElementById('checkout-btn');
   if (checkoutBtn) {
     checkoutBtn.addEventListener('click', () => {
-      const overlay = document.getElementById('checkout-overlay');
-      if (overlay) {
-        overlay.classList.add('active');
-        toggleCartSidebar(); // close cart sidebar
+      const checkoutOverlay = document.getElementById('checkout-overlay');
+      if (checkoutOverlay) {
+        checkoutOverlay.classList.add('open');
+        toggleCartSidebar();
         if (typeof renderOrderSummary === 'function') {
           renderOrderSummary();
         }
