@@ -11,7 +11,7 @@ const pool = mysql.createPool({
   queueLimit: 0,
   enableKeepAlive: true,
   keepAliveInitialDelay: 0,
-  ...(process.env.DB_HOST && process.env.DB_HOST !== 'localhost' ? { ssl: { rejectUnauthorized: true } } : {}),
+  ...(process.env.DB_HOST && process.env.DB_HOST !== 'localhost' ? { ssl: { rejectUnauthorized: false } } : {}),
 });
 
 async function testConnection() {
