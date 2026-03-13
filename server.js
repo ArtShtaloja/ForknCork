@@ -9,7 +9,7 @@ const { testConnection } = require('./src/config/db');
 const { errorHandler, notFoundHandler } = require('./src/middleware/error.middleware');
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 3000;
 
 // ---------------------------------------------------------------------------
 // Security & parsing middleware
