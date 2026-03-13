@@ -27,12 +27,11 @@ const findAll = async (filters = {}) => {
 
   query += ' ORDER BY p.created_at DESC';
 
-  const limit = filters.limit || 20;
-  const offset = filters.offset || 0;
-  query += ' LIMIT ? OFFSET ?';
-  values.push(limit, offset);
+  const limit = parseInt(filters.limit, 10) || 20;
+  const offset = parseInt(filters.offset, 10) || 0;
+  query += ` LIMIT ${limit} OFFSET ${offset}`;
 
-  const [rows] = await pool.execute(query, values);
+  const [rows] = await pool.query(query, values);
   return rows;
 };
 
