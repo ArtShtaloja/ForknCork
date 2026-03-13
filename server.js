@@ -11,6 +11,9 @@ const { errorHandler, notFoundHandler } = require('./src/middleware/error.middle
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// Trust reverse proxy (Render) so secure cookies work behind HTTPS
+app.set('trust proxy', 1);
+
 // ---------------------------------------------------------------------------
 // Security & parsing middleware
 // ---------------------------------------------------------------------------
@@ -42,6 +45,7 @@ app.use(
     cookie: {
       secure: process.env.NODE_ENV === 'production',
       httpOnly: true,
+      sameSite: 'lax',
       maxAge: 24 * 60 * 60 * 1000, // 24 hours
     },
   })
