@@ -49,10 +49,12 @@ CREATE TABLE IF NOT EXISTS `categories` (
   `sort_order` INT NOT NULL DEFAULT 0,
   `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `deleted_at` TIMESTAMP NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `idx_categories_slug` (`slug`),
   INDEX `idx_categories_sort_order` (`sort_order`),
-  INDEX `idx_categories_is_active` (`is_active`)
+  INDEX `idx_categories_is_active` (`is_active`),
+  INDEX `idx_categories_deleted_at` (`deleted_at`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ============================================================
@@ -70,12 +72,14 @@ CREATE TABLE IF NOT EXISTS `products` (
   `is_featured` TINYINT(1) NOT NULL DEFAULT 0,
   `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `deleted_at` TIMESTAMP NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `idx_products_slug` (`slug`),
   INDEX `idx_products_category_id` (`category_id`),
   INDEX `idx_products_is_available` (`is_available`),
   INDEX `idx_products_is_featured` (`is_featured`),
   INDEX `idx_products_price` (`price`),
+  INDEX `idx_products_deleted_at` (`deleted_at`),
   CONSTRAINT `fk_products_category` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -110,11 +114,13 @@ CREATE TABLE IF NOT EXISTS `orders` (
   `notes` TEXT DEFAULT NULL,
   `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `deleted_at` TIMESTAMP NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   INDEX `idx_orders_status` (`status`),
   INDEX `idx_orders_order_type` (`order_type`),
   INDEX `idx_orders_customer_email` (`customer_email`),
-  INDEX `idx_orders_created_at` (`created_at`)
+  INDEX `idx_orders_created_at` (`created_at`),
+  INDEX `idx_orders_deleted_at` (`deleted_at`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ============================================================
@@ -177,9 +183,11 @@ CREATE TABLE IF NOT EXISTS `contact_messages` (
   `message` TEXT NOT NULL,
   `is_read` TINYINT(1) NOT NULL DEFAULT 0,
   `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `deleted_at` TIMESTAMP NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   INDEX `idx_contact_messages_is_read` (`is_read`),
-  INDEX `idx_contact_messages_created_at` (`created_at`)
+  INDEX `idx_contact_messages_created_at` (`created_at`),
+  INDEX `idx_contact_messages_deleted_at` (`deleted_at`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ============================================================

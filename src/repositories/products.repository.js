@@ -2,7 +2,7 @@ const { pool } = require('../config/db.js');
 
 const findAll = async (filters = {}) => {
   let query = 'SELECT p.*, c.name AS category_name FROM products p LEFT JOIN categories c ON p.category_id = c.id';
-  const conditions = [];
+  const conditions = ['p.deleted_at IS NULL'];
   const values = [];
 
   if (filters.category_id) {
@@ -21,9 +21,7 @@ const findAll = async (filters = {}) => {
     values.push(searchTerm, searchTerm);
   }
 
-  if (conditions.length > 0) {
-    query += ' WHERE ' + conditions.join(' AND ');
-  }
+  query += ' WHERE ' + conditions.join(' AND ');
 
   query += ' ORDER BY p.created_at DESC';
 
@@ -37,7 +35,7 @@ const findAll = async (filters = {}) => {
 
 const findById = async (id) => {
   const [rows] = await pool.execute(
-    'SELECT p.*, c.name AS category_name FROM products p LEFT JOIN categories c ON p.category_id = c.id WHERE p.id = ?',
+    'SELECT p.*, c.name AS category_name FROM products p LEFT JOIN categories c ON p.category_id = c.id WHERE p.id = ? AND p.deleted_at IS NULL',
     [id]
   );
   return rows[0] || null;
@@ -45,7 +43,7 @@ const findById = async (id) => {
 
 const findBySlug = async (slug) => {
   const [rows] = await pool.execute(
-    'SELECT p.*, c.name AS category_name FROM products p LEFT JOIN categories c ON p.category_id = c.id WHERE p.slug = ?',
+    'SELECT p.*, c.name AS category_name FROM products p LEFT JOIN categories c ON p.category_id = c.id WHERE p.slug = ? AND p.deleted_at IS NULL',
     [slug]
   );
   return rows[0] || null;
@@ -53,7 +51,7 @@ const findBySlug = async (slug) => {
 
 const findByCategory = async (categoryId) => {
   const [rows] = await pool.execute(
-    'SELECT p.*, c.name AS category_name FROM products p LEFT JOIN categories c ON p.category_id = c.id WHERE p.category_id = ? ORDER BY p.created_at DESC',
+    'SELECT p.*, c.name AS category_name FROM products p LEFT JOIN categories c ON p.category_id = c.id WHERE p.category_id = ? AND p.deleted_at IS NULL ORDER BY p.created_at DESC',
     [categoryId]
   );
   return rows;
@@ -61,7 +59,7 @@ const findByCategory = async (categoryId) => {
 
 const findFeatured = async () => {
   const [rows] = await pool.execute(
-    'SELECT p.*, c.name AS category_name FROM products p LEFT JOIN categories c ON p.category_id = c.id WHERE p.is_featured = 1 AND p.is_available = 1 ORDER BY p.created_at DESC'
+    'SELECT p.*, c.name AS category_name FROM products p LEFT JOIN categories c ON p.category_id = c.id WHERE p.is_featured = 1 AND p.is_available = 1 AND p.deleted_at IS NULL ORDER BY p.created_at DESC'
   );
   return rows;
 };
@@ -110,7 +108,7 @@ const update = async (id, data) => {
 
 const remove = async (id) => {
   const [result] = await pool.execute(
-    'DELETE FROM products WHERE id = ?',
+    'UPDATE products SET deleted_at = NOW() WHERE id = ? AND deleted_at IS NULL',
     [id]
   );
   return result.affectedRows > 0;
@@ -142,7 +140,7 @@ const deleteImage = async (imageId) => {
 
 const count = async (filters = {}) => {
   let query = 'SELECT COUNT(*) AS total FROM products p';
-  const conditions = [];
+  const conditions = ['p.deleted_at IS NULL'];
   const values = [];
 
   if (filters.category_id) {
@@ -161,9 +159,7 @@ const count = async (filters = {}) => {
     values.push(searchTerm, searchTerm);
   }
 
-  if (conditions.length > 0) {
-    query += ' WHERE ' + conditions.join(' AND ');
-  }
+  query += ' WHERE ' + conditions.join(' AND ');
 
   const [rows] = await pool.execute(query, values);
   return rows[0].total;

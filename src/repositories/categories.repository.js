@@ -2,14 +2,14 @@ const { pool } = require('../config/db.js');
 
 const findAll = async () => {
   const [rows] = await pool.execute(
-    'SELECT * FROM categories ORDER BY sort_order ASC'
+    'SELECT * FROM categories WHERE deleted_at IS NULL ORDER BY sort_order ASC'
   );
   return rows;
 };
 
 const findById = async (id) => {
   const [rows] = await pool.execute(
-    'SELECT * FROM categories WHERE id = ?',
+    'SELECT * FROM categories WHERE id = ? AND deleted_at IS NULL',
     [id]
   );
   return rows[0] || null;
@@ -17,7 +17,7 @@ const findById = async (id) => {
 
 const findBySlug = async (slug) => {
   const [rows] = await pool.execute(
-    'SELECT * FROM categories WHERE slug = ?',
+    'SELECT * FROM categories WHERE slug = ? AND deleted_at IS NULL',
     [slug]
   );
   return rows[0] || null;
@@ -56,7 +56,7 @@ const update = async (id, data) => {
 
 const remove = async (id) => {
   const [result] = await pool.execute(
-    'DELETE FROM categories WHERE id = ?',
+    'UPDATE categories SET deleted_at = NOW() WHERE id = ? AND deleted_at IS NULL',
     [id]
   );
   return result.affectedRows > 0;
@@ -64,7 +64,7 @@ const remove = async (id) => {
 
 const findActive = async () => {
   const [rows] = await pool.execute(
-    'SELECT * FROM categories WHERE is_active = 1 ORDER BY sort_order ASC'
+    'SELECT * FROM categories WHERE is_active = 1 AND deleted_at IS NULL ORDER BY sort_order ASC'
   );
   return rows;
 };
