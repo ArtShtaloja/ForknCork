@@ -91,32 +91,11 @@ app.get('/admin/login', (_req, res) => {
 });
 
 // All admin sub-routes serve the SPA dashboard
-app.get('/admin/dashboard', (_req, res) => {
-  res.sendFile(path.join(__dirname, 'views', 'admin', 'dashboard.html'));
-});
-
-app.get('/admin/products', (_req, res) => {
-  res.sendFile(path.join(__dirname, 'views', 'admin', 'dashboard.html'));
-});
-
-app.get('/admin/categories', (_req, res) => {
-  res.sendFile(path.join(__dirname, 'views', 'admin', 'dashboard.html'));
-});
-
-app.get('/admin/orders', (_req, res) => {
-  res.sendFile(path.join(__dirname, 'views', 'admin', 'dashboard.html'));
-});
-
-app.get('/admin/messages', (_req, res) => {
-  res.sendFile(path.join(__dirname, 'views', 'admin', 'dashboard.html'));
-});
-
-app.get('/admin/images', (_req, res) => {
-  res.sendFile(path.join(__dirname, 'views', 'admin', 'dashboard.html'));
-});
-
-app.get('/admin/settings', (_req, res) => {
-  res.sendFile(path.join(__dirname, 'views', 'admin', 'dashboard.html'));
+const adminDashboardSections = ['dashboard', 'products', 'categories', 'orders', 'messages', 'images', 'settings'];
+adminDashboardSections.forEach((section) => {
+  app.get(`/admin/${section}`, (_req, res) => {
+    res.sendFile(path.join(__dirname, 'views', 'admin', 'dashboard.html'));
+  });
 });
 
 // ---------------------------------------------------------------------------
