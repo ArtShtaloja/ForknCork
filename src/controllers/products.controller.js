@@ -15,10 +15,25 @@ const getAll = async (req, res, next) => {
       limit: req.query.limit,
     };
 
+    console.log('[DEBUG] Products Controller: Fetching with filters:', filters);
     const { products, total, page, limit } = await productsService.getAll(filters);
     return response.paginate(res, products, page, limit, total);
   } catch (err) {
-    next(err);
+    console.error('[CRITICAL DEBUG] Products Controller Error:', err);
+    // Return detailed error directly to bypass stale error middleware
+    return res.status(500).json({
+      success: false,
+      message: 'CRITICAL DEBUG FAIL',
+      error: err.message,
+      sqlMessage: err.sqlMessage,
+      code: err.code,
+      stack: err.stack,
+      db_info: {
+        host: process.env.DB_HOST,
+        db: process.env.DB_NAME,
+        has_url: !!process.env.DATABASE_URL
+      }
+    });
   }
 };
 
@@ -28,9 +43,17 @@ const getAll = async (req, res, next) => {
 const getFeatured = async (req, res, next) => {
   try {
     const products = await productsService.getFeatured();
-    return response.success(res, products, 'Featured products retrieved');
+    return response.success(res, products);
   } catch (err) {
-    next(err);
+    console.error('[CRITICAL DEBUG] Featured Controller Error:', err);
+    return res.status(500).json({
+      success: false,
+      message: 'CRITICAL DEBUG FAIL (FEATURED)',
+      error: err.message,
+      sqlMessage: err.sqlMessage,
+      code: err.code,
+      stack: err.stack
+    });
   }
 };
 
