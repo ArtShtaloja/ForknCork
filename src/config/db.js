@@ -1,23 +1,17 @@
 const mysql = require('mysql2/promise');
 
-let dbConfig;
+let pool;
 if (process.env.DATABASE_URL) {
-  console.log('[DB] Using DATABASE_URL connection string');
-  dbConfig = {
-    uri: process.env.DATABASE_URL.trim(),
-    waitForConnections: true,
-    connectionLimit: 10,
-    queueLimit: 0,
-    enableKeepAlive: true,
-    keepAliveInitialDelay: 0,
-    ssl: { rejectUnauthorized: false },
-  };
+  const uri = process.env.DATABASE_URL.trim();
+  console.log('[DB] Initializing pool with DATABASE_URL');
+  pool = mysql.createPool(uri);
 } else {
   const host = process.env.DB_HOST ? process.env.DB_HOST.trim() : 'localhost';
   const port = parseInt(process.env.DB_PORT, 10) || 3306;
   const database = process.env.DB_NAME ? process.env.DB_NAME.trim() : 'fork_n_cork';
-  console.log(`[DB] Using individual env vars → ${host}:${port}/${database}`);
-  dbConfig = {
+  console.log(`[DB] Initializing pool with individual vars → ${host}:${port}/${database}`);
+  
+  pool = mysql.createPool({
     host,
     port,
     user: process.env.DB_USER ? process.env.DB_USER.trim() : 'root',
@@ -31,10 +25,8 @@ if (process.env.DATABASE_URL) {
     ...(host !== 'localhost' && host !== '127.0.0.1'
       ? { ssl: { rejectUnauthorized: false } }
       : {}),
-  };
+  });
 }
-
-const pool = mysql.createPool(dbConfig);
 
 /**
  * Test the DB connection with retry logic.
