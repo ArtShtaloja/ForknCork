@@ -19,8 +19,9 @@ const loadFeaturedProducts = async () => {
   container.innerHTML = '<div class="spinner"></div>';
 
   try {
-    const res = await fetch(`${API_BASE}/products/featured`, {
-      credentials: 'include',
+    const res = await fetch(`${API_BASE}/api/products/featured`, {
+  credentials: 'include',
+
     });
     const json = await res.json();
 
