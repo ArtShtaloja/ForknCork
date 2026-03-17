@@ -7,6 +7,7 @@ const session = require('express-session');
 const path = require('path');
 const { testConnection } = require('./src/config/db');
 const { errorHandler, notFoundHandler } = require('./src/middleware/error.middleware');
+const mysql = require('mysql2');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -23,6 +24,7 @@ app.use(
     crossOriginEmbedderPolicy: false,
   })
 );
+
 
 app.use(
   cors({

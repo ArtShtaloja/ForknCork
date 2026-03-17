@@ -18,53 +18,53 @@
   <aside class="admin-sidebar" id="admin-sidebar">
     <div class="admin-sidebar-brand">
       <div class="brand-icon"><i class="fas fa-utensils"></i></div>
-      <a href="/" class="brand-text">Fork <span>n</span> Cork</a>
+      <a href="/" class="brand-text" data-i18n="nav.logo">Fork <span>n</span> Cork</a>
     </div>
 
     <nav class="admin-nav">
       <div class="admin-nav-group">
-        <div class="admin-nav-label">Main</div>
+        <div class="admin-nav-label" data-i18n="admin.nav.main">Main</div>
         <button class="admin-nav-item active" data-section="dashboard">
-          <i class="fas fa-chart-pie"></i> <span>Dashboard</span>
+          <i class="fas fa-chart-pie"></i> <span data-i18n="admin.nav.dashboard">Dashboard</span>
         </button>
         <button class="admin-nav-item" data-section="orders">
-          <i class="fas fa-receipt"></i> <span>Orders</span>
+          <i class="fas fa-receipt"></i> <span data-i18n="admin.nav.orders">Orders</span>
           <span class="nav-badge" id="pending-badge"></span>
         </button>
       </div>
 
       <div class="admin-nav-group">
-        <div class="admin-nav-label">Menu</div>
+        <div class="admin-nav-label" data-i18n="admin.nav.menu">Menu</div>
         <button class="admin-nav-item" data-section="products">
-          <i class="fas fa-burger"></i> <span>Products</span>
+          <i class="fas fa-burger"></i> <span data-i18n="admin.nav.products">Products</span>
         </button>
         <button class="admin-nav-item" data-section="categories">
-          <i class="fas fa-layer-group"></i> <span>Categories</span>
+          <i class="fas fa-layer-group"></i> <span data-i18n="admin.nav.categories">Categories</span>
         </button>
         <button class="admin-nav-item" data-section="images">
-          <i class="fas fa-images"></i> <span>Images</span>
+          <i class="fas fa-images"></i> <span data-i18n="admin.nav.images">Images</span>
         </button>
       </div>
 
       <div class="admin-nav-group">
-        <div class="admin-nav-label">Communication</div>
+        <div class="admin-nav-label" data-i18n="admin.nav.communication">Communication</div>
         <button class="admin-nav-item" data-section="messages">
-          <i class="fas fa-envelope"></i> <span>Messages</span>
+          <i class="fas fa-envelope"></i> <span data-i18n="admin.nav.messages">Messages</span>
           <span class="nav-badge" id="unread-badge"></span>
         </button>
       </div>
 
       <div class="admin-nav-group">
-        <div class="admin-nav-label">System</div>
+        <div class="admin-nav-label" data-i18n="admin.nav.system">System</div>
         <button class="admin-nav-item" data-section="settings">
-          <i class="fas fa-cog"></i> <span>Settings</span>
+          <i class="fas fa-cog"></i> <span data-i18n="admin.nav.settings">Settings</span>
         </button>
       </div>
     </nav>
 
     <div class="admin-sidebar-footer">
       <button class="admin-nav-item" id="logout-btn">
-        <i class="fas fa-right-from-bracket"></i> <span>Logout</span>
+        <i class="fas fa-right-from-bracket"></i> <span data-i18n="admin.nav.logout">Logout</span>
       </button>
     </div>
   </aside>
@@ -81,13 +81,22 @@
           <i class="fas fa-bars"></i>
         </button>
         <div>
-          <h1 id="topbar-title">Dashboard</h1>
+          <h1 id="topbar-title" data-i18n="admin.nav.dashboard">Dashboard</h1>
         </div>
       </div>
       <div class="admin-topbar-right">
+        <div class="topbar-actions">
+          <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+            <i class="fas fa-moon"></i>
+          </button>
+          <div class="lang-switcher">
+            <button class="lang-btn" data-lang="en">EN</button>
+            <button class="lang-btn" data-lang="al">SQ</button>
+          </div>
+        </div>
         <div class="admin-user">
           <i class="fas fa-user-circle"></i>
-          <span id="admin-user-name">Admin</span>
+          <span id="admin-user-name" data-i18n="admin.common.admin">Admin</span>
         </div>
       </div>
     </header>
@@ -104,56 +113,56 @@
             <div class="stat-card-icon icon-primary"><i class="fas fa-receipt"></i></div>
             <div class="stat-card-info">
               <div class="stat-value" id="stat-total-orders">-</div>
-              <div class="stat-label">Total Orders</div>
+              <div class="stat-label" data-i18n="admin.dashboard.totalOrders">Total Orders</div>
             </div>
           </div>
           <div class="stat-card">
             <div class="stat-card-icon icon-success"><i class="fas fa-euro-sign"></i></div>
             <div class="stat-card-info">
               <div class="stat-value" id="stat-total-revenue">-</div>
-              <div class="stat-label">Total Revenue</div>
+              <div class="stat-label" data-i18n="admin.dashboard.totalRevenue">Total Revenue</div>
             </div>
           </div>
           <div class="stat-card">
             <div class="stat-card-icon icon-info"><i class="fas fa-shopping-bag"></i></div>
             <div class="stat-card-info">
               <div class="stat-value" id="stat-today-orders">-</div>
-              <div class="stat-label">Today's Orders</div>
+              <div class="stat-label" data-i18n="admin.dashboard.todayOrders">Today's Orders</div>
             </div>
           </div>
           <div class="stat-card">
             <div class="stat-card-icon icon-warning"><i class="fas fa-coins"></i></div>
             <div class="stat-card-info">
               <div class="stat-value" id="stat-today-revenue">-</div>
-              <div class="stat-label">Today's Revenue</div>
+              <div class="stat-label" data-i18n="admin.dashboard.todayRevenue">Today's Revenue</div>
             </div>
           </div>
           <div class="stat-card">
             <div class="stat-card-icon icon-primary"><i class="fas fa-chart-line"></i></div>
             <div class="stat-card-info">
               <div class="stat-value" id="stat-week-revenue">-</div>
-              <div class="stat-label">This Week</div>
+              <div class="stat-label" data-i18n="admin.dashboard.thisWeek">This Week</div>
             </div>
           </div>
           <div class="stat-card">
             <div class="stat-card-icon icon-danger"><i class="fas fa-utensils"></i></div>
             <div class="stat-card-info">
               <div class="stat-value" id="stat-products">-</div>
-              <div class="stat-label">Products</div>
+              <div class="stat-label" data-i18n="admin.nav.products">Products</div>
             </div>
           </div>
           <div class="stat-card">
             <div class="stat-card-icon icon-info"><i class="fas fa-layer-group"></i></div>
             <div class="stat-card-info">
               <div class="stat-value" id="stat-categories">-</div>
-              <div class="stat-label">Categories</div>
+              <div class="stat-label" data-i18n="admin.nav.categories">Categories</div>
             </div>
           </div>
           <div class="stat-card">
             <div class="stat-card-icon icon-danger"><i class="fas fa-envelope"></i></div>
             <div class="stat-card-info">
               <div class="stat-value" id="stat-unread">-</div>
-              <div class="stat-label">Unread Messages</div>
+              <div class="stat-label" data-i18n="admin.dashboard.unreadMessages">Unread Messages</div>
             </div>
           </div>
         </div>
@@ -173,19 +182,19 @@
         <!-- Recent Orders -->
         <div class="admin-card">
           <div class="admin-card-header">
-            <h3><i class="fas fa-clock"></i> Recent Orders</h3>
-            <button class="btn btn-sm btn-outline" data-section="orders" onclick="navigateSection('orders')">View All</button>
+            <h3 data-i18n="admin.dashboard.recentOrders"><i class="fas fa-clock"></i> Recent Orders</h3>
+            <button class="btn btn-sm btn-outline" data-section="orders" onclick="navigateSection('orders')" data-i18n="admin.dashboard.viewAll">View All</button>
           </div>
           <div class="table-container">
             <table class="admin-table">
               <thead>
                 <tr>
-                  <th>#</th>
-                  <th>Customer</th>
-                  <th>Items</th>
-                  <th>Total</th>
-                  <th>Status</th>
-                  <th>Date</th>
+                  <th data-i18n="admin.dashboard.id">#</th>
+                  <th data-i18n="admin.dashboard.customer">Customer</th>
+                  <th data-i18n="admin.dashboard.items">Items</th>
+                  <th data-i18n="admin.dashboard.total">Total</th>
+                  <th data-i18n="admin.dashboard.status">Status</th>
+                  <th data-i18n="admin.dashboard.date">Date</th>
                 </tr>
               </thead>
               <tbody id="recent-orders-body">
@@ -203,16 +212,16 @@
           <div class="admin-section-actions">
             <div class="search-wrapper">
               <i class="fas fa-search"></i>
-              <input type="text" id="orders-search" placeholder="Search orders...">
+              <input type="text" id="orders-search" data-i18n-placeholder="admin.orders.searchPlaceholder" placeholder="Search orders...">
             </div>
             <select class="form-select" id="orders-status-filter" style="width:auto;padding:9px 12px;">
-              <option value="">All Statuses</option>
-              <option value="pending">Pending</option>
-              <option value="confirmed">Confirmed</option>
-              <option value="preparing">Preparing</option>
-              <option value="ready">Ready</option>
-              <option value="completed">Completed</option>
-              <option value="cancelled">Cancelled</option>
+              <option value="" data-i18n="admin.orders.allStatuses">All Statuses</option>
+              <option value="pending" data-i18n="admin.orders.status.pending">Pending</option>
+              <option value="confirmed" data-i18n="admin.orders.status.confirmed">Confirmed</option>
+              <option value="preparing" data-i18n="admin.orders.status.preparing">Preparing</option>
+              <option value="ready" data-i18n="admin.orders.status.ready">Ready</option>
+              <option value="completed" data-i18n="admin.orders.status.completed">Completed</option>
+              <option value="cancelled" data-i18n="admin.orders.status.cancelled">Cancelled</option>
             </select>
           </div>
         </div>
@@ -246,8 +255,11 @@
           <div class="admin-section-actions">
             <div class="search-wrapper">
               <i class="fas fa-search"></i>
-              <input type="text" id="products-search" placeholder="Search products...">
+              <input type="text" id="products-search" data-i18n-placeholder="admin.products.searchPlaceholder" placeholder="Search products...">
             </div>
+            <select class="form-select" id="products-category-filter" style="width:auto;padding:9px 12px;">
+              <option value="" data-i18n="admin.products.allCategories">All Categories</option>
+            </select>
             <button class="btn btn-primary" id="add-product-btn">
               <i class="fas fa-plus"></i> Add Product
             </button>
@@ -258,13 +270,13 @@
             <table class="admin-table">
               <thead>
                 <tr>
-                  <th>Image</th>
-                  <th>Name</th>
-                  <th>Category</th>
-                  <th>Price</th>
-                  <th>Featured</th>
-                  <th>Available</th>
-                  <th>Actions</th>
+                  <th data-i18n="admin.products.image">Image</th>
+                  <th data-i18n="admin.products.name">Name</th>
+                  <th data-i18n="admin.products.category">Category</th>
+                  <th data-i18n="admin.products.price">Price</th>
+                  <th data-i18n="admin.products.featured">Featured</th>
+                  <th data-i18n="admin.products.available">Available</th>
+                  <th data-i18n="admin.products.actions">Actions</th>
                 </tr>
               </thead>
               <tbody id="products-table-body">
@@ -280,9 +292,15 @@
       <div class="admin-section" id="section-categories">
         <div class="admin-section-header">
           <h2>Categories</h2>
-          <button class="btn btn-primary" id="add-category-btn">
-            <i class="fas fa-plus"></i> Add Category
-          </button>
+          <div class="admin-section-actions">
+            <div class="search-wrapper">
+              <i class="fas fa-search"></i>
+              <input type="text" id="categories-search" data-i18n-placeholder="admin.categories.searchPlaceholder" placeholder="Search categories...">
+            </div>
+            <button class="btn btn-primary" id="add-category-btn">
+              <i class="fas fa-plus"></i> Add Category
+            </button>
+          </div>
         </div>
         <div class="admin-card">
           <div class="table-container">
@@ -308,9 +326,15 @@
       <div class="admin-section" id="section-images">
         <div class="admin-section-header">
           <h2>Image Library</h2>
-          <button class="btn btn-primary" id="upload-image-btn">
-            <i class="fas fa-cloud-upload-alt"></i> Upload Image
-          </button>
+          <div class="admin-section-actions">
+            <div class="search-wrapper">
+              <i class="fas fa-search"></i>
+              <input type="text" id="images-search" data-i18n-placeholder="admin.images.searchPlaceholder" placeholder="Search images...">
+            </div>
+            <button class="btn btn-primary" id="upload-image-btn">
+              <i class="fas fa-cloud-upload-alt"></i> Upload Image
+            </button>
+          </div>
         </div>
         <div class="admin-card">
           <div class="admin-card-body">
@@ -325,6 +349,12 @@
       <div class="admin-section" id="section-messages">
         <div class="admin-section-header">
           <h2>Messages</h2>
+          <div class="admin-section-actions">
+            <div class="search-wrapper">
+              <i class="fas fa-search"></i>
+              <input type="text" id="messages-search" data-i18n-placeholder="admin.messages.searchPlaceholder" placeholder="Search messages...">
+            </div>
+          </div>
         </div>
         <div class="admin-card">
           <div class="table-container">
@@ -588,6 +618,10 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+<script src="/js/i18n.js"></script>
 <script src="/js/admin.js"></script>
+<script>
+  I18n.init();
+</script>
 </body>
 </html>

@@ -39,22 +39,22 @@ const handleLoginSubmit = async (e) => {
   let hasError = false;
 
   if (!email) {
-    showLoginFieldError('login-email', 'Email is required');
+    showLoginFieldError('login-email', I18n.t('admin.login.emailRequired'));
     hasError = true;
   } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-    showLoginFieldError('login-email', 'Please enter a valid email');
+    showLoginFieldError('login-email', I18n.t('admin.login.emailInvalid'));
     hasError = true;
   }
 
   if (!password) {
-    showLoginFieldError('login-password', 'Password is required');
+    showLoginFieldError('login-password', I18n.t('admin.login.passwordRequired'));
     hasError = true;
   }
 
   if (hasError) return;
 
   submitBtn.disabled = true;
-  submitBtn.textContent = 'Signing in...';
+  submitBtn.textContent = I18n.t('admin.login.signingIn');
   if (errorAlert) errorAlert.style.display = 'none';
 
   try {
@@ -68,18 +68,18 @@ const handleLoginSubmit = async (e) => {
     const json = await res.json();
 
     if (!res.ok || !json.success) {
-      throw new Error(json.message || 'Invalid email or password');
+      throw new Error(json.message || I18n.t('admin.login.invalidCredentials'));
     }
 
     window.location.href = '/admin/dashboard';
   } catch (err) {
     console.error('Login error:', err);
     if (errorAlert) {
-      errorAlert.textContent = err.message || 'Login failed. Please try again.';
+      errorAlert.textContent = err.message || I18n.t('admin.login.failed');
       errorAlert.style.display = 'block';
     }
     submitBtn.disabled = false;
-    submitBtn.textContent = 'Sign In';
+    submitBtn.textContent = I18n.t('admin.login.signIn');
   }
 };
 

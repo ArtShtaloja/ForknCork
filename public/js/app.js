@@ -76,7 +76,7 @@ const addToCart = (product) => {
   saveCart(cart);
   updateCartBadge();
   renderCart();
-  showToast(`${product.name} added to cart`, 'success');
+  showToast(`${product.name} ${I18n.t('common.addedToCart')}`, 'success');
 };
 
 const removeFromCart = (productId) => {
@@ -167,9 +167,9 @@ const renderCart = () => {
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="width:48px;height:48px;margin-bottom:1rem;opacity:.3">
           <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/>
         </svg>
-        <p>${typeof I18n !== 'undefined' ? I18n.t('cart.empty') : 'Your cart is empty'}</p>
-        <p class="cart-empty-desc">${typeof I18n !== 'undefined' ? I18n.t('cart.emptyDesc') : 'Add some delicious items from our menu!'}</p>
-        <a href="/menu" class="btn btn-primary btn-sm">${typeof I18n !== 'undefined' ? I18n.t('cart.browseMenu') : 'Browse Menu'}</a>
+        <p data-i18n="cart.empty">${I18n.t('cart.empty')}</p>
+        <p class="cart-empty-desc" data-i18n="cart.emptyDesc">${I18n.t('cart.emptyDesc')}</p>
+        <a href="/menu" class="btn btn-primary btn-sm" data-i18n="cart.browseMenu">${I18n.t('cart.browseMenu')}</a>
       </div>
     `;
     if (totalEl) totalEl.textContent = formatPrice(0);
@@ -236,6 +236,7 @@ const renderCart = () => {
 
 document.addEventListener('DOMContentLoaded', () => {
   updateCartBadge();
+  initTheme();
 
   // Cart toggle button
   const cartToggle = document.getElementById('cart-toggle');
@@ -273,3 +274,27 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 });
+
+// ---------------------------------------------------------------------------
+// Theme Management
+// ---------------------------------------------------------------------------
+
+const initTheme = () => {
+  const toggle = document.getElementById('theme-toggle');
+  const savedTheme = localStorage.getItem('forkncork_theme') || 'dark';
+
+  if (savedTheme === 'light') {
+    document.body.classList.add('light-theme');
+  }
+
+  if (toggle) {
+    toggle.addEventListener('click', () => {
+      const isLight = document.body.classList.toggle('light-theme');
+      localStorage.setItem('forkncork_theme', isLight ? 'light' : 'dark');
+      
+      // Haptic feedback feel
+      toggle.style.transform = 'scale(0.9)';
+      setTimeout(() => toggle.style.transform = 'scale(1)', 100);
+    });
+  }
+};

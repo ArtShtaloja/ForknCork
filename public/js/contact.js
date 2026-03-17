@@ -48,7 +48,7 @@ const handleContactSubmit = async (e) => {
         }
       }
     });
-    showToast('Please fix the errors in the form', 'error');
+    showToast(I18n.t('contact.fixErrors'), 'error');
     return;
   }
 
@@ -77,7 +77,7 @@ const handleContactSubmit = async (e) => {
     form.reset();
   } catch (err) {
     console.error('Contact form error:', err);
-    showToast(err.message || 'Failed to send message.', 'error');
+    showToast(err.message || I18n.t('contact.error'), 'error');
   } finally {
     submitBtn.disabled = false;
     const sendText = typeof I18n !== 'undefined' ? I18n.t('contact.send') : 'Send Message';

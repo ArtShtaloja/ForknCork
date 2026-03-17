@@ -59,16 +59,22 @@ const create = async (orderData, items) => {
 
   // Calculate subtotals per line item and the grand total
   let totalAmount = 0;
-  const enrichedItems = items.map((item) => {
+  
+  // Get product names if they are not provided
+  const productRepo = require('../repositories/products.repository.js');
+  
+  const enrichedItems = await Promise.all(items.map(async (item) => {
+    const product = await productRepo.findById(item.product_id);
     const subtotal = parseFloat((item.quantity * item.unit_price).toFixed(2));
     totalAmount += subtotal;
     return {
       product_id: item.product_id,
+      product_name: product ? product.name : 'Unknown Product',
       quantity: item.quantity,
       unit_price: item.unit_price,
       subtotal,
     };
-  });
+  }));
 
   totalAmount = parseFloat(totalAmount.toFixed(2));
 

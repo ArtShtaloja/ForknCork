@@ -130,7 +130,7 @@ CREATE TABLE IF NOT EXISTS `order_items` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `order_id` INT UNSIGNED NOT NULL,
   `product_id` INT UNSIGNED NOT NULL,
-  `product_name` VARCHAR(200) NOT NULL,
+  `product_name` VARCHAR(200) DEFAULT NULL,
   `quantity` INT UNSIGNED NOT NULL DEFAULT 1,
   `unit_price` DECIMAL(8,2) NOT NULL,
   `subtotal` DECIMAL(10,2) NOT NULL,

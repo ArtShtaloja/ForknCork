@@ -131,7 +131,7 @@ const initAddToCartButton = (product) => {
     e.preventDefault();
 
     if (product.is_available === false) {
-      showToast('This product is currently unavailable', 'warning');
+      showToast(I18n.t('product.unavailable'), 'warning');
       return;
     }
 

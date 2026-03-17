@@ -10,6 +10,7 @@ const getAll = async (req, res, next) => {
     const filters = {
       status: req.query.status,
       customer_email: req.query.customer_email,
+      search: req.query.search,
       page: req.query.page,
       limit: req.query.limit,
     };

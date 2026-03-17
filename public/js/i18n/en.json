@@ -105,6 +105,10 @@
     "remove": "Remove"
   },
   "checkout": {
+    "success": "Order placed successfully!",
+    "error": "Failed to place order. Please try again.",
+    "cartEmpty": "Your cart is empty",
+    "fixErrors": "Please fix the errors in the form",
     "title": "Complete Your Order",
     "orderSummary": "Order Summary",
     "name": "Full Name",
@@ -136,6 +140,9 @@
     "title": "Contact Us",
     "subtitle": "We'd love to hear from you",
     "breadcrumb": "Contact",
+    "prepare": "We are preparing your order...",
+    "unavailable": "This product is currently unavailable",
+    "breadcrumbProduct": "Product",
     "formTitle": "Send Us a Message",
     "name": "Your Name",
     "namePlaceholder": "John Doe",
@@ -156,12 +163,17 @@
     "sending": "Sending...",
     "successTitle": "Message Sent!",
     "successMsg": "We'll get back to you as soon as possible.",
+    "fixErrors": "Please fix the errors in the form",
     "infoTitle": "Restaurant Info",
     "address": "Address",
-    "addressValue": "Prishtina, Kosovo",
-    "phoneValue": "+383 44 123 456",
+    "addressValue": "Yll Morina pn, Gjakove 50000",
+    "phoneValue": "+383 44 168 776",
     "emailValue": "info@forkncork.com",
     "hoursTitle": "Opening Hours",
+    "monFri": "Mon - Fri",
+    "satSun": "Sat - Sun",
+    "saturday": "Saturday",
+    "sunday": "Sunday",
     "servicesTitle": "Our Services",
     "dineIn": "Dine-In",
     "dineInDesc": "Enjoy your meal in our cozy restaurant",
@@ -170,11 +182,129 @@
     "delivery": "Delivery",
     "deliveryDesc": "Hot food delivered to your door"
   },
+  "admin": {
+    "login": {
+      "title": "Management Dashboard",
+      "email": "Email Address",
+      "emailPlaceholder": "admin@forkncork.com",
+      "password": "Password",
+      "passwordPlaceholder": "Enter your password",
+      "signIn": "Sign In",
+      "signingIn": "Signing in...",
+      "backToWeb": "Back to Website",
+      "secured": "Secured admin access",
+      "emailRequired": "Email is required",
+      "emailInvalid": "Please enter a valid email",
+      "passwordRequired": "Password is required",
+      "invalidCredentials": "Invalid email or password",
+      "failed": "Login failed. Please try again."
+    },
+    "nav": {
+      "main": "Main",
+      "dashboard": "Dashboard",
+      "orders": "Orders",
+      "menu": "Menu",
+      "products": "Products",
+      "categories": "Categories",
+      "images": "Images",
+      "communication": "Communication",
+      "messages": "Messages",
+      "system": "System",
+      "settings": "Settings",
+      "logout": "Logout"
+    },
+    "orders": {
+      "title": "Orders",
+      "searchPlaceholder": "Search orders...",
+      "allStatuses": "All Statuses",
+      "status": {
+        "pending": "Pending",
+        "confirmed": "Confirmed",
+        "preparing": "Preparing",
+        "ready": "Ready",
+        "completed": "Completed",
+        "cancelled": "Cancelled"
+      }
+    },
+    "dashboard": {
+      "title": "Dashboard",
+      "totalOrders": "Total Orders",
+      "totalRevenue": "Total Revenue",
+      "todayOrders": "Today's Orders",
+      "todayRevenue": "Today's Revenue",
+      "thisWeek": "This Week",
+      "unreadMessages": "Unread Messages",
+      "recentOrders": "Recent Orders",
+      "viewAll": "View All",
+      "customer": "Customer",
+      "items": "Items",
+      "total": "Total",
+      "status": "Status",
+      "date": "Date"
+    },
+    "products": {
+      "title": "Products",
+      "searchPlaceholder": "Search products...",
+      "allCategories": "All Categories",
+      "add": "Add Product",
+      "image": "Image",
+      "name": "Name",
+      "category": "Category",
+      "price": "Price",
+      "featured": "Featured",
+      "available": "Available",
+      "actions": "Actions"
+    },
+    "categories": {
+      "title": "Categories",
+      "searchPlaceholder": "Search categories...",
+      "add": "Add Category"
+    },
+    "images": {
+      "title": "Image Library",
+      "searchPlaceholder": "Search images...",
+      "upload": "Upload Image"
+    },
+    "messages": {
+      "title": "Messages",
+      "searchPlaceholder": "Search messages..."
+    },
+    "notifications": {
+      "orderStatusUpdated": "Order status updated",
+      "productCreated": "Product created",
+      "productUpdated": "Product updated",
+      "productDeleted": "Product deleted",
+      "categoryCreated": "Category created",
+      "categoryUpdated": "Category updated",
+      "categoryDeleted": "Category deleted",
+      "imageUploaded": "Image uploaded",
+      "imageDeleted": "Image deleted",
+      "messageMarkedRead": "Message marked as read",
+      "messageDeleted": "Message deleted",
+      "settingsSaved": "Settings saved",
+      "settingsError": "Some settings failed to save",
+      "hoursUpdated": "Opening hours updated",
+      "error": "Operation failed",
+      "productNameRequired": "Product name is required",
+      "priceRequired": "Valid price is required",
+      "categoryRequired": "Category is required",
+      "categoryNameRequired": "Category name is required",
+      "imageRequired": "Please select an image"
+    },
+    "confirmations": {
+      "deleteProduct": "Are you sure you want to delete this product?",
+      "deleteCategory": "Are you sure you want to delete this category?",
+      "deleteImage": "Are you sure you want to delete this image?",
+      "deleteMessage": "Are you sure you want to delete this message?"
+    }
+  },
   "common": {
     "loading": "Loading...",
     "error": "Something went wrong",
     "retry": "Try Again",
     "back": "Back",
-    "currency": "\u20ac"
+    "currency": "\u20ac",
+    "addedToCart": "added to cart",
+    "failedToLoad": "Failed to load data"
   }
 }

@@ -191,7 +191,7 @@ const handleCheckoutSubmit = async (e) => {
     showOrderConfirmation(order);
   } catch (err) {
     console.error('Checkout error:', err);
-    showToast(err.message || 'Failed to place order.', 'error');
+    showToast(I18n.t('checkout.error'), 'error');
     submitBtn.disabled = false;
     const placeText = typeof I18n !== 'undefined' ? I18n.t('checkout.placeOrder') : 'Place Order';
     submitBtn.textContent = placeText;
@@ -234,17 +234,17 @@ const showOrderConfirmation = (order) => {
   const successTitle = typeof I18n !== 'undefined' ? I18n.t('checkout.successTitle') : 'Order Confirmed!';
   const successMsg = typeof I18n !== 'undefined' ? I18n.t('checkout.successMsg') : 'Your order has been placed successfully.';
 
+  // Update modal content to show success
   modalBody.innerHTML = `
-    <div class="order-success">
-      <div class="order-success-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+    <div class="text-center py-4">
+      <div class="success-icon mb-3" style="font-size:3rem;color:var(--primary)">
+        <i class="fas fa-check-circle"></i>
       </div>
-      <h3>${successTitle}</h3>
-      <p>${successMsg}</p>
-      <div class="order-num">#${orderNumber}</div>
-      <a href="/menu" class="btn btn-primary">${typeof I18n !== 'undefined' ? I18n.t('nav.menu') : 'Menu'}</a>
+      <h2 class="mb-2" data-i18n="checkout.thankYou">${I18n.t('checkout.thankYou')}</h2>
+      <p class="text-dim mb-4" data-i18n="checkout.successMsg">${I18n.t('checkout.successMsg')}</p>
+      <button class="btn btn-primary" onclick="location.href='/'" data-i18n="admin.login.backToWeb">${I18n.t('admin.login.backToWeb')}</button>
     </div>
   `;
 
-  showToast('Order placed successfully!', 'success');
+  showToast(I18n.t('checkout.success'), 'success');
 };

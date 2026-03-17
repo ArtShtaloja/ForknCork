@@ -26,6 +26,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   initSettingsForm();
   initImageUploadForm();
   initSearch();
+  initTheme();
 
   loadDashboard();
 });
@@ -86,11 +87,10 @@ function navigateSection(target) {
 
   currentSection = target;
   const titleEl = document.getElementById('topbar-title');
-  const titles = {
-    dashboard: 'Dashboard', orders: 'Orders', products: 'Products',
-    categories: 'Categories', images: 'Image Library', messages: 'Messages', settings: 'Settings',
-  };
-  if (titleEl) titleEl.textContent = titles[target] || target;
+  if (titleEl) {
+    titleEl.textContent = I18n.t(`admin.nav.${target}`);
+    titleEl.dataset.i18n = `admin.nav.${target}`;
+  }
 
   loadSectionData(target);
 }
@@ -319,22 +319,13 @@ async function loadOrders() {
   try {
     let url = `${API}/orders?page=${ordersPage}&limit=15`;
     if (status) url += `&status=${status}`;
+    if (search) url += `&search=${encodeURIComponent(search)}`;
 
     const res = await fetch(url, { credentials: 'include' });
     const json = await res.json();
     if (!res.ok || !json.success) throw new Error(json.message);
 
-    let orders = json.data || [];
-
-    // Client-side search filter
-    if (search) {
-      const q = search.toLowerCase();
-      orders = orders.filter(o =>
-        (o.customer_name || '').toLowerCase().includes(q) ||
-        (o.customer_email || '').toLowerCase().includes(q) ||
-        String(o.id).includes(q)
-      );
-    }
+    const orders = json.data || [];
 
     if (orders.length === 0) {
       tbody.innerHTML = '<tr><td colspan="7" class="table-empty">No orders found</td></tr>';
@@ -440,7 +431,7 @@ async function updateOrderStatus(id, status) {
     if (!res.ok || !json.success) throw new Error(json.message);
     showToast(`Order #${id} → ${cap(status)}`, 'success');
   } catch (err) {
-    showToast(err.message || 'Failed to update status', 'error');
+    showToast(err.message || I18n.t('admin.notifications.error'), 'error');
     loadOrders();
   }
 }
@@ -453,10 +444,12 @@ async function loadProducts() {
   tbody.innerHTML = '<tr><td colspan="7" class="table-empty"><div class="admin-spinner"></div></td></tr>';
 
   const search = document.getElementById('products-search')?.value?.trim() || '';
+  const categoryId = document.getElementById('products-category-filter')?.value || '';
 
   try {
     let url = `${API}/products?page=${productsPage}&limit=15`;
     if (search) url += `&search=${encodeURIComponent(search)}`;
+    if (categoryId) url += `&category_id=${categoryId}`;
 
     const res = await fetch(url, { credentials: 'include' });
     const json = await res.json();
@@ -553,9 +546,9 @@ function initProductForm() {
     const price = document.getElementById('product-price').value;
     const categoryId = document.getElementById('product-category').value;
 
-    if (!name) { showToast('Product name is required', 'error'); return; }
-    if (!price || parseFloat(price) < 0) { showToast('Valid price is required', 'error'); return; }
-    if (!categoryId) { showToast('Category is required', 'error'); return; }
+    if (!name) { showToast(I18n.t('admin.notifications.productNameRequired'), 'error'); return; }
+    if (!price || parseFloat(price) < 0) { showToast(I18n.t('admin.notifications.priceRequired'), 'error'); return; }
+    if (!categoryId) { showToast(I18n.t('admin.notifications.categoryRequired'), 'error'); return; }
 
     const saveBtn = document.getElementById('product-save-btn');
     saveBtn.disabled = true;
@@ -583,11 +576,11 @@ function initProductForm() {
       const json = await res.json();
       if (!res.ok || !json.success) throw new Error(json.message);
 
-      showToast(isEdit ? 'Product updated' : 'Product created', 'success');
+      showToast(isEdit ? I18n.t('admin.notifications.productUpdated') : I18n.t('admin.notifications.productCreated'), 'success');
       closeModal('product-modal');
       loadProducts();
     } catch (err) {
-      showToast(err.message || 'Failed to save product', 'error');
+      showToast(err.message || I18n.t('admin.notifications.error'), 'error');
     } finally {
       saveBtn.disabled = false;
     }
@@ -634,7 +627,7 @@ function deleteProduct(id, name) {
       const res = await fetch(`${API}/products/${id}`, { method: 'DELETE', credentials: 'include' });
       const json = await res.json();
       if (!res.ok || !json.success) throw new Error(json.message);
-      showToast('Product deleted', 'success');
+      showToast(I18n.t('admin.notifications.productDeleted'), 'success');
       loadProducts();
     } catch (err) {
       showToast(err.message || 'Failed to delete', 'error');
@@ -652,14 +645,23 @@ function resetProductForm() {
 }
 
 async function loadProductCategories() {
-  const select = document.getElementById('product-category');
-  if (!select) return;
+  const selects = [
+    document.getElementById('product-category'),
+    document.getElementById('products-category-filter')
+  ];
+  
   try {
     const res = await fetch(`${API}/categories`, { credentials: 'include' });
     const json = await res.json();
     if (res.ok && json.success) {
-      select.innerHTML = '<option value="">Select category</option>' +
-        (json.data || []).map(c => `<option value="${c.id}">${esc(c.name)}</option>`).join('');
+      const categories = json.data || [];
+      const optionsHtml = categories.map(c => `<option value="${c.id}">${esc(c.name)}</option>`).join('');
+      
+      selects.forEach(select => {
+        if (!select) return;
+        const defaultValue = select.id === 'product-category' ? 'Select category' : 'All Categories';
+        select.innerHTML = `<option value="">${defaultValue}</option>` + optionsHtml;
+      });
     }
   } catch {}
 }
@@ -676,7 +678,16 @@ async function loadCategories() {
     const json = await res.json();
     if (!res.ok || !json.success) throw new Error(json.message);
 
-    const categories = json.data || [];
+    let categories = json.data || [];
+    const search = document.getElementById('categories-search')?.value?.trim()?.toLowerCase();
+
+    if (search) {
+      categories = categories.filter(c =>
+        (c.name || '').toLowerCase().includes(search) ||
+        (c.description || '').toLowerCase().includes(search) ||
+        (c.slug || '').toLowerCase().includes(search)
+      );
+    }
 
     if (categories.length === 0) {
       tbody.innerHTML = '<tr><td colspan="5" class="table-empty">No categories found</td></tr>';
@@ -717,7 +728,7 @@ function initCategoryForm() {
     e.preventDefault();
 
     const name = document.getElementById('category-name').value.trim();
-    if (!name) { showToast('Category name is required', 'error'); return; }
+    if (!name) { showToast(I18n.t('admin.notifications.categoryNameRequired'), 'error'); return; }
 
     const saveBtn = document.getElementById('category-save-btn');
     saveBtn.disabled = true;
@@ -736,11 +747,11 @@ function initCategoryForm() {
       const json = await res.json();
       if (!res.ok || !json.success) throw new Error(json.message);
 
-      showToast(isEdit ? 'Category updated' : 'Category created', 'success');
+      showToast(isEdit ? I18n.t('admin.notifications.categoryUpdated') : I18n.t('admin.notifications.categoryCreated'), 'success');
       closeModal('category-modal');
       loadCategories();
     } catch (err) {
-      showToast(err.message || 'Failed to save category', 'error');
+      showToast(err.message || I18n.t('admin.notifications.error'), 'error');
     } finally {
       saveBtn.disabled = false;
     }
@@ -762,7 +773,7 @@ function deleteCategory(id, name) {
       const res = await fetch(`${API}/categories/${id}`, { method: 'DELETE', credentials: 'include' });
       const json = await res.json();
       if (!res.ok || !json.success) throw new Error(json.message);
-      showToast('Category deleted', 'success');
+      showToast(I18n.t('admin.notifications.categoryDeleted'), 'success');
       loadCategories();
     } catch (err) {
       showToast(err.message || 'Failed to delete', 'error');
@@ -788,7 +799,14 @@ async function loadImages() {
     const json = await res.json();
     if (!res.ok || !json.success) throw new Error(json.message);
 
-    const images = json.data || [];
+    let images = json.data || [];
+    const search = document.getElementById('images-search')?.value?.trim()?.toLowerCase();
+
+    if (search) {
+      images = images.filter(img =>
+        (img.filename || '').toLowerCase().includes(search)
+      );
+    }
 
     if (images.length === 0) {
       grid.innerHTML = '<div class="empty-state"><i class="fas fa-images"></i><p>No images uploaded yet</p></div>';
@@ -847,7 +865,7 @@ function initImageUploadForm() {
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
-    if (!fileInput?.files.length) { showToast('Please select an image', 'error'); return; }
+    if (!fileInput?.files.length) { showToast(I18n.t('admin.notifications.imageRequired'), 'error'); return; }
 
     const btn = document.getElementById('image-upload-btn');
     btn.disabled = true;
@@ -860,11 +878,11 @@ function initImageUploadForm() {
       const json = await res.json();
       if (!res.ok || !json.success) throw new Error(json.message);
 
-      showToast('Image uploaded', 'success');
+      showToast(I18n.t('admin.notifications.imageUploaded'), 'success');
       closeModal('image-upload-modal');
       loadImages();
     } catch (err) {
-      showToast(err.message || 'Upload failed', 'error');
+      showToast(err.message || I18n.t('admin.notifications.error'), 'error');
     } finally {
       btn.disabled = false;
     }
@@ -879,7 +897,7 @@ function deleteImage(filename) {
       });
       const json = await res.json();
       if (!res.ok || !json.success) throw new Error(json.message);
-      showToast('Image deleted', 'success');
+      showToast(I18n.t('admin.notifications.imageDeleted'), 'success');
       loadImages();
     } catch (err) {
       showToast(err.message || 'Failed to delete', 'error');
@@ -899,7 +917,17 @@ async function loadMessages() {
     const json = await res.json();
     if (!res.ok || !json.success) throw new Error(json.message);
 
-    const messages = json.data || [];
+    let messages = json.data || [];
+    const search = document.getElementById('messages-search')?.value?.trim()?.toLowerCase();
+
+    if (search) {
+      messages = messages.filter(m =>
+        (m.name || '').toLowerCase().includes(search) ||
+        (m.email || '').toLowerCase().includes(search) ||
+        (m.subject || '').toLowerCase().includes(search) ||
+        (m.message || '').toLowerCase().includes(search)
+      );
+    }
 
     if (messages.length === 0) {
       tbody.innerHTML = '<tr><td colspan="6" class="table-empty">No messages</td></tr>';
@@ -969,10 +997,10 @@ async function markMessageRead(id) {
     const res = await fetch(`${API}/contact/${id}/read`, { method: 'PUT', credentials: 'include' });
     const json = await res.json();
     if (!res.ok || !json.success) throw new Error(json.message);
-    showToast('Marked as read', 'success');
+    showToast(I18n.t('admin.notifications.messageMarkedRead'), 'success');
     loadMessages();
   } catch (err) {
-    showToast(err.message || 'Failed', 'error');
+    showToast(I18n.t('admin.notifications.error'), 'error');
   }
 }
 
@@ -982,7 +1010,7 @@ async function deleteMessage(id) {
       const res = await fetch(`${API}/contact/${id}`, { method: 'DELETE', credentials: 'include' });
       const json = await res.json();
       if (!res.ok || !json.success) throw new Error(json.message);
-      showToast('Message deleted', 'success');
+      showToast(I18n.t('admin.notifications.messageDeleted'), 'success');
       loadMessages();
     } catch (err) {
       showToast(err.message || 'Failed to delete', 'error');
@@ -1038,7 +1066,7 @@ function initSettingsForm() {
       }
     }
 
-    showToast(hasError ? 'Some settings failed to save' : 'Settings saved', hasError ? 'warning' : 'success');
+    showToast(hasError ? I18n.t('admin.notifications.settingsError') : I18n.t('admin.notifications.settingsSaved'), hasError ? 'warning' : 'success');
     btn.disabled = false;
     btn.innerHTML = '<i class="fas fa-save"></i> Save Settings';
   });
@@ -1094,9 +1122,9 @@ async function saveHoursRow(id, btn) {
     });
     const json = await res.json();
     if (!res.ok || !json.success) throw new Error(json.message);
-    showToast('Hours updated', 'success');
+    showToast(I18n.t('admin.notifications.hoursUpdated'), 'success');
   } catch (err) {
-    showToast(err.message || 'Failed to update', 'error');
+    showToast(err.message || I18n.t('admin.notifications.error'), 'error');
   } finally {
     btn.disabled = false;
   }
@@ -1118,6 +1146,10 @@ function initSearch() {
   const ordersSearch = document.getElementById('orders-search');
   const productsSearch = document.getElementById('products-search');
   const ordersFilter = document.getElementById('orders-status-filter');
+  const productsCatFilter = document.getElementById('products-category-filter');
+  const categoriesSearch = document.getElementById('categories-search');
+  const imagesSearch = document.getElementById('images-search');
+  const messagesSearch = document.getElementById('messages-search');
 
   if (ordersSearch) {
     ordersSearch.addEventListener('input', debounce(() => { ordersPage = 1; loadOrders(); }, 400));
@@ -1127,6 +1159,18 @@ function initSearch() {
   }
   if (ordersFilter) {
     ordersFilter.addEventListener('change', () => { ordersPage = 1; loadOrders(); });
+  }
+  if (productsCatFilter) {
+    productsCatFilter.addEventListener('change', () => { productsPage = 1; loadProducts(); });
+  }
+  if (categoriesSearch) {
+    categoriesSearch.addEventListener('input', debounce(() => loadCategories(), 300));
+  }
+  if (imagesSearch) {
+    imagesSearch.addEventListener('input', debounce(() => loadImages(), 300));
+  }
+  if (messagesSearch) {
+    messagesSearch.addEventListener('input', debounce(() => loadMessages(), 300));
   }
 }
 
@@ -1258,4 +1302,28 @@ function showToast(message, type = 'success') {
     toast.classList.add('leaving');
     toast.addEventListener('animationend', () => toast.remove());
   }, 3500);
+}
+// ─── Theme ──────────────────────────────────────────────────────────────
+function initTheme() {
+  const themeToggle = document.getElementById('theme-toggle');
+  if (!themeToggle) return;
+
+  const currentTheme = localStorage.getItem('admin-theme') || 'light';
+  if (currentTheme === 'dark') {
+    document.body.classList.add('dark-theme');
+    themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+  }
+
+  themeToggle.addEventListener('click', () => {
+    const isDark = document.body.classList.toggle('dark-theme');
+    const theme = isDark ? 'dark' : 'light';
+    localStorage.setItem('admin-theme', theme);
+    
+    // Update icon
+    themeToggle.innerHTML = isDark ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+    
+    // Smooth transition
+    themeToggle.style.transform = 'scale(0.9)';
+    setTimeout(() => themeToggle.style.transform = 'scale(1)', 100);
+  });
 }

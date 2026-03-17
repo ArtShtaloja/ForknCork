@@ -124,6 +124,10 @@
     "placeOrder": "Dergo Porosine",
     "placing": "Duke Derguar...",
     "successTitle": "Porosia u Konfirmua!",
+    "success": "Porosia u krye me sukses!",
+    "error": "Dështoi kryerja e porosisë. Ju lutem provoni përsëri.",
+    "cartEmpty": "Shporta juaj është bosh",
+    "fixErrors": "Ju lutem korrigjoni gabimet në formë",
     "successMsg": "Porosia juaj u vendos me sukses.",
     "orderNumber": "Numri i Porosise",
     "close": "Mbyll",
@@ -135,7 +139,9 @@
   "contact": {
     "title": "Na Kontaktoni",
     "subtitle": "Do te donim te degjonim nga ju",
-    "breadcrumb": "Kontakti",
+    "prepare": "Jemi duke përgatitur porosinë tuaj...",
+    "unavailable": "Ky produkt nuk është në gjendje për momentin",
+    "breadcrumb": "Produkti",
     "formTitle": "Na Dergoni nje Mesazh",
     "name": "Emri Juaj",
     "namePlaceholder": "Emri Mbiemri",
@@ -156,12 +162,17 @@
     "sending": "Duke Derguar...",
     "successTitle": "Mesazhi u Dergua!",
     "successMsg": "Do t'ju kthehemi sa me shpejt te jete e mundur.",
+    "fixErrors": "Ju lutem korrigjoni gabimet ne forme",
     "infoTitle": "Info Restoranti",
     "address": "Adresa",
-    "addressValue": "Prishtine, Kosove",
-    "phoneValue": "+383 44 123 456",
+    "addressValue": "Yll Morina pn, Gjakove 50000",
+    "phoneValue": "+383 44 168 776",
     "emailValue": "info@forkncork.com",
     "hoursTitle": "Orari i Punes",
+    "monFri": "Hen - Pre",
+    "satSun": "Sht - Die",
+    "saturday": "E Shtune",
+    "sunday": "E Diel",
     "servicesTitle": "Sherbimet Tona",
     "dineIn": "Ne Restorant",
     "dineInDesc": "Shijoni vakten tuaj ne restorantin tone te rehatshem",
@@ -170,11 +181,129 @@
     "delivery": "Dergese",
     "deliveryDesc": "Ushqim i ngrohte i derguar ne deren tuaj"
   },
+  "admin": {
+    "login": {
+      "title": "Paneli i Menaxhimit",
+      "email": "Adresa Email",
+      "emailPlaceholder": "admin@forkncork.com",
+      "password": "Fjalekalimi",
+      "passwordPlaceholder": "Shkruani fjalëkalimin",
+      "signIn": "Kyçu",
+      "signingIn": "Duke u kyçur...",
+      "backToWeb": "Kthehu në Faqe",
+      "secured": "Qasje e siguruar admin",
+      "emailRequired": "Email-i kërkohet",
+      "emailInvalid": "Ju lutem shkruani një email të vlefshëm",
+      "passwordRequired": "Fjalëkalimi kërkohet",
+      "invalidCredentials": "Email-i ose fjalëkalimi i pasaktë",
+      "failed": "Kyçja dështoi. Ju lutem provoni përsëri."
+    },
+    "nav": {
+      "main": "Kryesore",
+      "dashboard": "Dashboard",
+      "orders": "Porosite",
+      "menu": "Menuja",
+      "products": "Produktet",
+      "categories": "Kategorite",
+      "images": "Imazhet",
+      "communication": "Komunikimi",
+      "messages": "Mesazhet",
+      "system": "Sistemi",
+      "settings": "Cilesimet",
+      "logout": "Ckycu"
+    },
+    "orders": {
+      "title": "Porosite",
+      "searchPlaceholder": "Kerko porosi...",
+      "allStatuses": "Te gjitha statuset",
+      "status": {
+        "pending": "Ne pritje",
+        "confirmed": "E konfirmuar",
+        "preparing": "Duke u pergatitur",
+        "ready": "Gati",
+        "completed": "E perfunduar",
+        "cancelled": "E anuluar"
+      }
+    },
+    "dashboard": {
+      "title": "Dashboard",
+      "totalOrders": "Totali i Porosive",
+      "totalRevenue": "Totali i Fitimit",
+      "todayOrders": "Porosite Sot",
+      "todayRevenue": "Fitimi Sot",
+      "thisWeek": "Kete Jave",
+      "unreadMessages": "Mesazhe te Palexuara",
+      "recentOrders": "Porosite e Fundit",
+      "viewAll": "Shiko te Gjitha",
+      "customer": "Klienti",
+      "items": "Artikujt",
+      "total": "Totali",
+      "status": "Statusi",
+      "date": "Data"
+    },
+    "products": {
+      "title": "Produktet",
+      "searchPlaceholder": "Kerko produkte...",
+      "allCategories": "Të gjitha kategoritë",
+      "add": "Shto Produkt",
+      "image": "Imazhi",
+      "name": "Emri",
+      "category": "Kategoria",
+      "price": "Cmimi",
+      "featured": "I Preferuar",
+      "available": "Gjendje",
+      "actions": "Veprimet"
+    },
+    "categories": {
+      "title": "Kategorite",
+      "searchPlaceholder": "Kerko kategori...",
+      "add": "Shto Kategori"
+    },
+    "images": {
+      "title": "Biblioteka e Imazheve",
+      "searchPlaceholder": "Kerko imazhe...",
+      "upload": "Ngarko Imazh"
+    },
+    "messages": {
+      "title": "Mesazhet",
+      "searchPlaceholder": "Kerko mesazhe..."
+    },
+    "notifications": {
+      "orderStatusUpdated": "Statusi i porosisë u përditësua",
+      "productCreated": "Produkti u krijua",
+      "productUpdated": "Produkti u përditësua",
+      "productDeleted": "Produkti u fshi",
+      "categoryCreated": "Kategoria u krijua",
+      "categoryUpdated": "Kategoria u përditësua",
+      "categoryDeleted": "Kategoria u fshi",
+      "imageUploaded": "Imazhi u ngarkua",
+      "imageDeleted": "Imazhi u fshi",
+      "messageMarkedRead": "Mesazhi u shënua si i lexuar",
+      "messageDeleted": "Mesazhi u fshi",
+      "settingsSaved": "Cilësimet u ruanë",
+      "settingsError": "Disa cilësime dështuan të ruhen",
+      "hoursUpdated": "Orari u përditësua",
+      "error": "Veprimi dështoi",
+      "productNameRequired": "Emri i produktit kërkohet",
+      "priceRequired": "Cmimi i vlefshëm kërkohet",
+      "categoryRequired": "Kategoria kërkohet",
+      "categoryNameRequired": "Emri i kategorisë kërkohet",
+      "imageRequired": "Ju lutem zgjidhni një imazh"
+    },
+    "confirmations": {
+      "deleteProduct": "A jeni të sigurt që dëshironi të fshini këtë produkt?",
+      "deleteCategory": "A jeni të sigurt që dëshironi të fshini këtë kategori?",
+      "deleteImage": "A jeni të sigurt që dëshironi të fshini këtë imazh?",
+      "deleteMessage": "A jeni të sigurt që dëshironi të fshini këtë mesazh?"
+    }
+  },
   "common": {
     "loading": "Duke ngarkuar...",
     "error": "Dicka shkoi keq",
     "retry": "Provo Perseri",
     "back": "Kthehu",
-    "currency": "\u20ac"
+    "currency": "\u20ac",
+    "addedToCart": "u shtua ne shporte",
+    "failedToLoad": "Deshtoi ne ngarkimin e te dhenave"
   }
 }

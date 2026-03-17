@@ -15,6 +15,12 @@ const findAll = async (filters = {}) => {
     values.push(filters.customer_email);
   }
 
+  if (filters.search) {
+    const s = `%${filters.search}%`;
+    conditions.push('(customer_name LIKE ? OR customer_email LIKE ? OR id LIKE ?)');
+    values.push(s, s, s);
+  }
+
   query += ' WHERE ' + conditions.join(' AND ');
 
   query += ' ORDER BY created_at DESC';
@@ -54,15 +60,15 @@ const create = async (orderData) => {
 const createItems = async (orderId, items) => {
   if (!items || items.length === 0) return;
 
-  const placeholders = items.map(() => '(?, ?, ?, ?, ?)').join(', ');
+  const placeholders = items.map(() => '(?, ?, ?, ?, ?, ?)').join(', ');
   const values = [];
 
   for (const item of items) {
-    values.push(orderId, item.product_id, item.quantity, item.unit_price, item.subtotal);
+    values.push(orderId, item.product_id, item.product_name, item.quantity, item.unit_price, item.subtotal);
   }
 
   const [result] = await pool.execute(
-    `INSERT INTO order_items (order_id, product_id, quantity, unit_price, subtotal) VALUES ${placeholders}`,
+    `INSERT INTO order_items (order_id, product_id, product_name, quantity, unit_price, subtotal) VALUES ${placeholders}`,
     values
   );
   return result.affectedRows;
@@ -97,6 +103,12 @@ const count = async (filters = {}) => {
   if (filters.customer_email) {
     conditions.push('customer_email = ?');
     values.push(filters.customer_email);
+  }
+
+  if (filters.search) {
+    const s = `%${filters.search}%`;
+    conditions.push('(customer_name LIKE ? OR customer_email LIKE ? OR id LIKE ?)');
+    values.push(s, s, s);
   }
 
   query += ' WHERE ' + conditions.join(' AND ');

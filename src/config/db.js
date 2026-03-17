@@ -1,18 +1,24 @@
 const mysql = require('mysql2/promise');
 
-const pool = mysql.createPool({
-  host: process.env.DB_HOST || 'localhost',
-  port: parseInt(process.env.DB_PORT, 10) || 3306,
-  user: process.env.DB_USER || 'root',
-  password: process.env.DB_PASSWORD || '',
-  database: process.env.DB_NAME || 'fork_n_cork',
-  waitForConnections: true,
-  connectionLimit: 10,
-  queueLimit: 0,
-  enableKeepAlive: true,
-  keepAliveInitialDelay: 0,
-  ...(process.env.DB_HOST && process.env.DB_HOST !== 'localhost' ? { ssl: { rejectUnauthorized: false } } : {}),
-});
+const pool = mysql.createPool(
+  process.env.DATABASE_URL
+    ? process.env.DATABASE_URL.trim()
+    : {
+      host: process.env.DB_HOST ? process.env.DB_HOST.trim() : 'localhost',
+      port: parseInt(process.env.DB_PORT, 10) || 3306,
+      user: process.env.DB_USER ? process.env.DB_USER.trim() : 'root',
+      password: process.env.DB_PASSWORD ? process.env.DB_PASSWORD.trim() : '',
+      database: process.env.DB_NAME ? process.env.DB_NAME.trim() : 'fork_n_cork',
+      waitForConnections: true,
+      connectionLimit: 10,
+      queueLimit: 0,
+      enableKeepAlive: true,
+      keepAliveInitialDelay: 0,
+      ...(process.env.DB_HOST && process.env.DB_HOST !== 'localhost'
+        ? { ssl: { rejectUnauthorized: false } }
+        : {}),
+    }
+);
 
 async function testConnection() {
   try {

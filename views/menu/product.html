@@ -24,6 +24,10 @@
         <button class="lang-btn active" data-lang="en">EN</button>
         <button class="lang-btn" data-lang="al">SQ</button>
       </div>
+      <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="sun-icon"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="moon-icon"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+      </button>
       <button class="btn-icon cart-btn" id="cart-toggle" aria-label="Cart">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
         <span class="cart-badge" id="cart-badge">0</span>
@@ -43,7 +47,7 @@
       <span>/</span>
       <a href="/menu" data-i18n="product.breadcrumbMenu">Menu</a>
       <span>/</span>
-      <span id="product-breadcrumb">Product</span>
+      <span id="product-breadcrumb" data-i18n="product.breadcrumb">Product</span>
     </div>
     <h1 id="product-title-banner" data-i18n="nav.menu">Menu</h1>
   </div>
@@ -75,12 +79,12 @@
       <div>
         <h4 data-i18n="footer.openingHours">Opening Hours</h4>
         <ul class="footer-hours">
-          <li><span>Mon - Sun</span><span>08:00 - 24:00</span></li>
+          <li><span data-i18n="contact.monSun">Mon - Sun</span><span>08:00 - 24:00</span></li>
         </ul>
       </div>
       <div>
         <h4 data-i18n="footer.followUs">Follow Us</h4>
-        <p style="color:var(--text-dim);font-size:.9rem">info@forkncork.com</p>
+        <p style="color:var(--text-dim);font-size:.9rem" data-i18n="contact.emailValue">info@forkncork.com</p>
       </div>
     </div>
     <div class="footer-bottom">

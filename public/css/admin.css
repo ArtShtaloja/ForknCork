@@ -40,6 +40,35 @@
   --admin-font-mono: 'JetBrains Mono', 'SF Mono', 'Consolas', monospace;
 }
 
+/* ---------- Dark Theme Variables ---------- */
+.dark-theme {
+  --admin-bg: #0b0f1a;
+  --admin-surface: #111827;
+  --admin-sidebar-bg: #030712;
+  --admin-sidebar-hover: #111827;
+  --admin-sidebar-active: #1f2937;
+  --admin-sidebar-text: #9ca3af;
+  --admin-sidebar-text-active: #ffffff;
+  --admin-primary: #818cf8;
+  --admin-primary-hover: #6366f1;
+  --admin-primary-light: rgba(99, 102, 241, 0.15);
+  --admin-success: #10b981;
+  --admin-success-light: rgba(16, 185, 129, 0.1);
+  --admin-warning: #f59e0b;
+  --admin-warning-light: rgba(245, 158, 11, 0.1);
+  --admin-danger: #ef4444;
+  --admin-danger-light: rgba(239, 68, 68, 0.1);
+  --admin-info: #3b82f6;
+  --admin-info-light: rgba(59, 130, 246, 0.1);
+  --admin-text: #f3f4f6;
+  --admin-text-secondary: #9ca3af;
+  --admin-text-dim: #6b7280;
+  --admin-border: #1f2937;
+  --admin-shadow: 0 1px 3px rgba(0,0,0,0.3);
+  --admin-shadow-md: 0 4px 6px -1px rgba(0,0,0,0.4);
+  --admin-shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.5);
+}
+
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 body.admin-body {
@@ -276,6 +305,67 @@ body.admin-body {
 
 .admin-topbar-right .admin-user i {
   color: var(--admin-primary);
+}
+
+.topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-right: 8px;
+  padding-right: 16px;
+  border-right: 1px solid var(--admin-border);
+}
+
+/* Theme Toggle */
+.theme-toggle {
+  background: var(--admin-bg);
+  border: 1px solid var(--admin-border);
+  color: var(--admin-text-secondary);
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--admin-transition);
+  font-size: 0.95rem;
+}
+
+.theme-toggle:hover {
+  background: var(--admin-border);
+  color: var(--admin-primary);
+}
+
+/* Language Switcher */
+.lang-switcher {
+  display: flex;
+  background: var(--admin-bg);
+  padding: 3px;
+  border-radius: 8px;
+  border: 1px solid var(--admin-border);
+}
+
+.lang-btn {
+  background: transparent;
+  border: none;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--admin-text-secondary);
+  padding: 5px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all var(--admin-transition);
+}
+
+.lang-btn:hover {
+  color: var(--admin-text);
+}
+
+.lang-btn.active {
+  background: var(--admin-surface);
+  color: var(--admin-primary);
+  box-shadow: var(--admin-shadow);
 }
 
 /* ---------- Content Area ---------- */
@@ -847,7 +937,7 @@ body.admin-body {
   height: 18px;
   left: 3px;
   bottom: 3px;
-  background: #fff;
+  background: var(--admin-surface);
   border-radius: 50%;
   transition: var(--admin-transition);
 }
