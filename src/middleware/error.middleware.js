@@ -46,12 +46,17 @@ function errorHandler(err, req, res, _next) {
   }
 
   const statusCode = err.statusCode || 500;
-  const message =
-    process.env.NODE_ENV === 'production'
-      ? 'Internal Server Error'
-      : err.message || 'Internal Server Error';
+  
+  // ALWAYS return the exact error message and SQL error (if any) for debugging
+  const errorMessage = err.sqlMessage 
+    ? `DB Error: ${err.sqlMessage}` 
+    : err.message || 'Internal Server Error';
 
-  return error(res, message, statusCode);
+  return error(res, errorMessage, statusCode, {
+    stack: err.stack,
+    sql: err.sql,
+    code: err.code
+  });
 }
 
 module.exports = { notFoundHandler, errorHandler };

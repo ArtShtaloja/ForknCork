@@ -76,6 +76,7 @@ const loadProducts = async (categoryId = null) => {
       url += `?category_id=${categoryId}`;
     }
 
+    console.log(`[DEBUG] Frontend calling API URL: ${url}`);
     const res = await fetch(url, { credentials: 'include' });
     const json = await res.json();
 
