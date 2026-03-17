@@ -2,6 +2,10 @@
  * Fork n Cork - Homepage JS
  * Fetches and renders featured products.
  */
+const API_BASE =
+  window.location.hostname === "localhost"
+    ? "http://localhost:5000"
+    : "https://forkncork.onrender.com";
 
 document.addEventListener('DOMContentLoaded', async () => {
   await ProductImages.load();
