@@ -11,8 +11,15 @@ function notFoundHandler(req, res, _next) {
  * Global error-handling middleware.
  * Express recognises this as an error handler because it has four parameters.
  */
-function errorHandler(err, _req, res, _next) {
-  console.error('Unhandled error:', err);
+function errorHandler(err, req, res, _next) {
+  // Structured logging for easier debugging on Render
+  console.error('[ERROR]', {
+    timestamp: new Date().toISOString(),
+    method: req.method,
+    url: req.originalUrl,
+    message: err.message,
+    stack: process.env.NODE_ENV !== 'production' ? err.stack : undefined,
+  });
 
   // Multer file-size / file-type errors
   if (err.code === 'LIMIT_FILE_SIZE') {
@@ -31,6 +38,11 @@ function errorHandler(err, _req, res, _next) {
   // MySQL duplicate-entry errors
   if (err.code === 'ER_DUP_ENTRY') {
     return error(res, 'A record with that value already exists.', 409);
+  }
+
+  // MySQL connection lost (Aiven may power down)
+  if (err.code === 'ECONNREFUSED' || err.code === 'PROTOCOL_CONNECTION_LOST' || err.code === 'ENOTFOUND') {
+    return error(res, 'Database connection error. Please try again shortly.', 503);
   }
 
   const statusCode = err.statusCode || 500;

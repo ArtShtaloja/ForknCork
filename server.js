@@ -7,7 +7,7 @@ const session = require('express-session');
 const path = require('path');
 const { testConnection } = require('./src/config/db');
 const { errorHandler, notFoundHandler } = require('./src/middleware/error.middleware');
-const mysql = require('mysql2');
+
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -26,9 +26,32 @@ app.use(
 );
 
 
+// Build the list of allowed origins from CORS_ORIGIN env var
+const allowedOrigins = (() => {
+  const envOrigins = process.env.CORS_ORIGIN
+    ? process.env.CORS_ORIGIN.split(',').map(o => o.trim()).filter(Boolean)
+    : [];
+  // Always allow localhost for development
+  return [
+    ...envOrigins,
+    'http://localhost:3000',
+    'http://localhost:5000',
+  ];
+})();
+
 app.use(
   cors({
-    origin: process.env.CORS_ORIGIN || 'http://localhost:5000',
+    origin: function (origin, callback) {
+      // Allow requests with no origin (e.g. curl, server-to-server)
+      if (!origin) return callback(null, true);
+      // Allow any whitelisted origin
+      if (allowedOrigins.includes(origin)) return callback(null, true);
+      // In production, also mirror Render preview URLs
+      if (origin.endsWith('.onrender.com')) return callback(null, true);
+      // Fallback: allow (but log)
+      console.warn(`CORS: unexpected origin ${origin}`);
+      callback(null, true);
+    },
     credentials: true,
   })
 );
@@ -58,6 +81,31 @@ app.use(
 // ---------------------------------------------------------------------------
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
+// ---------------------------------------------------------------------------
+// Request logging (development)
+// ---------------------------------------------------------------------------
+if (process.env.NODE_ENV !== 'production') {
+  app.use('/api', (req, _res, next) => {
+    console.log(`[API] ${req.method} ${req.originalUrl}`);
+    next();
+  });
+}
+
+// ---------------------------------------------------------------------------
+// Health check — useful for Render and monitoring
+// ---------------------------------------------------------------------------
+app.get('/api/health', async (_req, res) => {
+  try {
+    const { pool } = require('./src/config/db');
+    const conn = await pool.getConnection();
+    conn.release();
+    return res.json({ status: 'ok', db: 'connected', timestamp: new Date().toISOString() });
+  } catch (err) {
+    console.error('Health check DB error:', err.message);
+    return res.status(503).json({ status: 'error', db: 'disconnected', error: err.message });
+  }
+});
 
 // ---------------------------------------------------------------------------
 // API routes

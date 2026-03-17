@@ -3,7 +3,13 @@
  * Professional restaurant management dashboard.
  */
 
-const API = '/api';
+// Use the backend URL when frontend is hosted separately (e.g. Render static site)
+const API = (() => {
+  if (typeof BACKEND_URL !== 'undefined' && BACKEND_URL) {
+    return BACKEND_URL.replace(/\/+$/, '') + '/api';
+  }
+  return '/api';
+})();
 
 // ─── State ──────────────────────────────────────────────────────────────
 let currentSection = 'dashboard';

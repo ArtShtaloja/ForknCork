@@ -3,7 +3,18 @@
  * Loaded on all public pages. Provides cart management, toasts, and shared utilities.
  */
 
-const API_BASE = '/api';
+// When the frontend is hosted separately (e.g. Render static site),
+// API calls must go to the backend's own URL, not the static site's domain.
+// Set BACKEND_URL in your Render static-site env vars, or it falls back to
+// a relative path for local dev / same-origin deployments.
+const API_BASE = (() => {
+  // Check for a global override (can be set via <script> tag or env injection)
+  if (typeof BACKEND_URL !== 'undefined' && BACKEND_URL) {
+    return BACKEND_URL.replace(/\/+$/, '') + '/api';
+  }
+  // Default: relative path (works when frontend & backend share the same origin)
+  return '/api';
+})();
 
 // ---------------------------------------------------------------------------
 // Price formatting

@@ -58,7 +58,12 @@ const handleLoginSubmit = async (e) => {
   if (errorAlert) errorAlert.style.display = 'none';
 
   try {
-    const res = await fetch('/api/auth/login', {
+    // Build API base the same way as app.js / admin.js
+    const apiBase = (typeof BACKEND_URL !== 'undefined' && BACKEND_URL)
+      ? BACKEND_URL.replace(/\/+$/, '') + '/api'
+      : '/api';
+
+    const res = await fetch(`${apiBase}/auth/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       credentials: 'include',
