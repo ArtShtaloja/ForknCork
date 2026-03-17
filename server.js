@@ -99,11 +99,13 @@ app.get('/api/health', async (_req, res) => {
   try {
     const { pool } = require('./src/config/db');
     const conn = await pool.getConnection();
+    // Test a basic query to ensure tables exist
+    await conn.execute('SELECT 1 FROM products LIMIT 1');
     conn.release();
-    return res.json({ status: 'ok', db: 'connected', timestamp: new Date().toISOString() });
+    return res.json({ status: 'ok', db: 'connected', tables: 'present', timestamp: new Date().toISOString() });
   } catch (err) {
     console.error('Health check DB error:', err.message);
-    return res.status(503).json({ status: 'error', db: 'disconnected', error: err.message });
+    return res.status(503).json({ status: 'error', db: 'disconnected/missing-tables', error: err.message, code: err.code });
   }
 });
 
