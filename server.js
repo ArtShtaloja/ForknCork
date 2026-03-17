@@ -125,6 +125,25 @@ app.get('/api/debug-db', async (_req, res) => {
 // ---------------------------------------------------------------------------
 // API routes
 // ---------------------------------------------------------------------------
+app.get('/api/check-env', (req, res) => {
+  const vars = ['DB_HOST', 'DB_USER', 'DB_PASSWORD', 'DB_NAME', 'DATABASE_URL', 'CORS_ORIGIN'];
+  const status = {};
+  vars.forEach(v => {
+    const val = process.env[v];
+    status[v] = val ? {
+      present: true,
+      length: val.length,
+      trimmed: val.trim().length === val.length,
+      prefix: val.substring(0, 3) + '...',
+      suffix: '...' + val.substring(val.length - 3)
+    } : { present: false };
+  });
+  res.json(status);
+});
+
+// Alias for products to match user request "Verify backend route /api/menu"
+app.use('/api/menu', require('./src/routes/products.routes'));
+
 app.use('/api/auth', require('./src/routes/auth.routes'));
 app.use('/api/categories', require('./src/routes/categories.routes'));
 app.use('/api/products', require('./src/routes/products.routes'));
