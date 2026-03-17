@@ -136,6 +136,7 @@ app.use('/api/admin', require('./src/routes/admin.routes'));
 // View routes — serve HTML pages from the views directory
 // ---------------------------------------------------------------------------
 app.get('/', (_req, res) => {
+  res.setHeader('X-App-Version', '1.0.1-debug');
   res.sendFile(path.join(__dirname, 'views', 'home', 'index.html'));
 });
 
