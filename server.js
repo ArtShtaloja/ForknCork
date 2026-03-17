@@ -110,6 +110,19 @@ app.get('/api/health', async (_req, res) => {
 });
 
 // ---------------------------------------------------------------------------
+// Debug endpoint — ONLY FOR DEBUGGING FAILURES
+// ---------------------------------------------------------------------------
+app.get('/api/debug-db', async (_req, res) => {
+  try {
+    const { pool } = require('./src/config/db');
+    const [rows] = await pool.execute('SHOW TABLES');
+    return res.json({ success: true, tables: rows });
+  } catch (err) {
+    return res.status(500).json({ success: false, error: err.message, stack: err.stack });
+  }
+});
+
+// ---------------------------------------------------------------------------
 // API routes
 // ---------------------------------------------------------------------------
 app.use('/api/auth', require('./src/routes/auth.routes'));
@@ -164,6 +177,7 @@ app.use(errorHandler);
 // Start server
 // ---------------------------------------------------------------------------
 async function start() {
+  console.log(`[STARTUP] Initializing server. Timestamp: ${new Date().toISOString()}`);
   await testConnection();
   app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
